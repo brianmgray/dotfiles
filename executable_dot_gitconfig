@@ -1,0 +1,78 @@
+[user]
+	name = Brian Gray
+	email = 638937+brianmgray@users.noreply.github.com
+[push]
+	default = tracking
+[credential]
+	helper = osxkeychain
+
+[alias]
+  dev = checkout develop
+  aliassearch = !git config --list | grep alias | grep
+  co = checkout
+  ltrack = !git checkout --track -b $1 legacy/$1
+  btrack = !git checkout --track -b $1 origin/$1
+  ci = commit
+  st = status
+  br = branch
+  cp = cherry-pick
+  curbranch = name-rev --name-only HEAD
+  crprep = !git hist --author=\"`git config --get user.name`\"
+  find = !git branch -r | grep 
+  type = cat-file -t
+  dump = cat-file -p
+  bs = bisect start
+  bg = bisect good
+  bb = bisect bad
+  br = bisect reset
+  undo = reset --soft HEAD~1
+  adda = !git add -A . && git status
+  lreset = !git reset HEAD $1 && git checkout -- $1 && git clean -fd
+  pushall = !git push --all origin && git push --follow-tags
+  tbd = for-each-ref --sort=taggerdate --format '%(refname) %(taggerdate)' refs/tags
+  sdiff = !git diff && git submodule foreach 'git diff'
+  spush = push --recurse-submodules=on-demand
+  supdate = submodule update --remote --merge
+  rdel = push origin --delete
+  remote-merged = !git-remote-merged-branches
+  remote-notmerged = !git-remote-notmerged-branches
+  rgrep = !git branch -r | grep
+
+  ## from mac-dev-setup
+  # Show verbose output about tags, branches or remotes
+  tags = tag -l
+  branches = branch -a
+  remotes = remote -v
+  # Pretty log output
+  hist = log --graph --pretty=format:'%Cred%h%Creset %s%C(yellow)%d%Creset %Cgreen(%cr)%Creset [%an]' --abbrev-commit --date=relative
+
+[core]
+        excludesfile = ~/.gitignore.global
+	preloadindex = true
+	fscache = true
+[color]
+        branch = auto
+        diff = auto
+        status = auto
+[color "branch"]
+        current = yellow reverse
+        local = yellow
+        remote = green
+[color "diff"]
+        meta = yellow bold
+        frag = magenta bold
+        old = red bold
+        new = green bold
+[color "status"]
+        added = yellow
+        changed = green
+        untracked = cyan
+[merge]
+	tool = opendiff
+[diff]
+	tool = opendiff
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

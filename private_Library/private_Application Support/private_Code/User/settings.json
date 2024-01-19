@@ -1,0 +1,16 @@
+{
+    "bracket-pair-colorizer-2.depreciation-notice": false,
+    "editor.linkedEditing": true,
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "explorer.confirmDragAndDrop": false,
+    "editor.rename.enablePreview": false,
+    "workbench.editor.enablePreview": false,
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "editor.rulers": [
+    120
+    ]
+}

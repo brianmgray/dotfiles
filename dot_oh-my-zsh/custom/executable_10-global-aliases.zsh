@@ -11,6 +11,7 @@ alias ng='node node_modules/.bin/ng'
 ALIASES="$ZSH_CUSTOM/10-global-aliases.zsh"
 alias ea='chezmoi edit --apply $ALIASES && source $ALIASES'
 alias fa='less $ALIASES | grep'
+alias setup='$(chezmoi source-path)/bin/new-env.sh'
 alias cp-to-envfiles='~/workspaces/environment-files/bin/cp-to-envfiles'
 alias cp-from-envfiles='~/workspaces/environment-files/bin/cp-from-envfiles'
 

@@ -9,8 +9,8 @@ alias ng='node node_modules/.bin/ng'
 
 # environment files
 ALIASES="$ZSH_CUSTOM/10-global-aliases.zsh"
-alias ea='vi $ALIASES && source $ALIASES'
-alias fa='less $ALIASES | grep $1'
+alias ea='chezmoi edit --apply $ALIASES && source $ALIASES'
+alias fa='less $ALIASES | grep'
 alias cp-to-envfiles='~/workspaces/environment-files/bin/cp-to-envfiles'
 alias cp-from-envfiles='~/workspaces/environment-files/bin/cp-from-envfiles'
 

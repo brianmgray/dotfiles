@@ -20,7 +20,7 @@ function run() {
     brew update -v 
     brew upgrade 
     brew upgrade --cask 
-    brew cleanup                                                                  SIGINT(2) ↵  1681  12:36:52
+    brew cleanup
 
     # git
     echo "setting up git..."
@@ -28,6 +28,13 @@ function run() {
     expected=$(brew list --versions git | cut -c 5-)    # git 2.43.0
     actual=$(git --version | cut -c 13-)                # git version 2.43.0
     verify git $expected $actual
+
+    # zsh
+    echo "setting up oh-my-zsh"
+    expected="omz not found"
+    actual=$(which omz)
+    if [ expected != actual ]; then echo "omz is found"; else echo "omz not found"; exit 1; fi
+    omz update
 
     # nvm
     # pulled automatically by oh-my-zsh
@@ -39,8 +46,6 @@ function run() {
     # chezmoi
     echo "setting up chezmoi..."
     brew install chezmoi
-
-
 
     echo "Successfully setup new environment"
 }

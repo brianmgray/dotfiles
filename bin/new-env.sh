@@ -1,6 +1,10 @@
 #!/bin/zsh
 # Run to setup new environment
 
+NODE=v20.11.0
+NPM=10.3
+
+
 autoload -U colors && colors
 
 function print_message() {
@@ -19,7 +23,7 @@ function run_if_needed() {
         print_message "\t$name: Verified correct version [$actual]" green
     else
         print_message "\t$name: Incorrect version. Expected [$expected]. Using [$actual]. Running command." red
-        eval "$command"
+        zsh -i -c "$command"    # some tools (e.g. omz) are only loaded in the interactive shell
         print_message "\t$name: Success."
     fi
 }
@@ -27,8 +31,8 @@ function run_if_needed() {
 function run() {
     # upgrade brew and dependencies
     print_message "updating brew..." yellow
-    # brew update -v
-    # brew upgrade && brew upgrade --cask && brew cleanup
+    brew update -v
+    brew upgrade && brew upgrade --cask && brew cleanup
 
     # git
     print_message "setting up git..." yellow
@@ -38,15 +42,21 @@ function run() {
 
     # zsh
     print_message "setting up oh-my-zsh..." yellow
+    ## install
+    if [[ ! -f "$ZSH/oh-my-zsh.sh" ]]; then
+      print_message "\toh-my-zsh: running installer" red
+      sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    fi
+    ## update
     expected="master"
-    actual=$(omz version | cut -c -6)                   # master (d43f03b)
-    run_if_needed "oh-my-zsh" "$expected" "$actual" "omz update"
-
-    # zsh theme
+    actual=$(zsh -i -c "omz version" | cut -c -6)                   # master (d43f03b)
+    run_if_needed "oh-my-zsh" "$expected" "$actual" "omz update && omz reload"
+    ## theme
     theme_dir=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-    if [[ ! -d "$directory_path" ]]; then
+    if [[ ! -d "$theme_dir" ]]; then
       echo "oh-my-zsh theme not found, pulling..."
       git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$theme_dir"
+      omz reload
     fi
 
     # nvm
@@ -56,15 +66,18 @@ function run() {
     if [ ! -f "$NVM_PATH" ]; then
       PROFILE=/dev/null zsh -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | zsh'
     fi
-    latest_stable_version=$(nvm version-remote --lts)
-    current_version=$(nvm current)
-    run_if_needed nvm "$latest_stable_version" "$current_version" "nvm install --lts && nvm install-latest-npm"
+    expected="$NODE"
+    actual=$(zsh -i -c "nvm current")
+    run_if_needed "nvm" "$expected" "$actual" \
+        "nvm install $NODE && \
+         nvm alias default $NODE && \
+         npm install npm@$NPM"
 
     # chezmoi
     print_message "setting up chezmoi..." yellow
     expected="/usr/local/bin/chezmoi"
     actual=$(which chezmoi)
-    run_if_needed "chezmoi" "expected" "actual" "brew install chezmoi"
+    run_if_needed "chezmoi" "$expected" "$actual" "brew install chezmoi"
 
     print_message "Successfully setup new environment" green
 }

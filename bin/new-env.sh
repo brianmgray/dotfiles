@@ -64,7 +64,7 @@ function run() {
     # Check if NVM is installed
     NVM_PATH="$HOME/.nvm/nvm.sh"
     if [ ! -f "$NVM_PATH" ]; then
-      PROFILE=/dev/null zsh -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | zsh'
+      PROFILE=/dev/null zsh -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash'
     fi
     expected="$NODE"
     actual=$(zsh -i -c "nvm current")
@@ -79,6 +79,7 @@ function run() {
     actual=$(which chezmoi)
     run_if_needed "chezmoi" "$expected" "$actual" "brew install chezmoi"
 
+    omz reload
     print_message "Successfully setup new environment" green
 }
 

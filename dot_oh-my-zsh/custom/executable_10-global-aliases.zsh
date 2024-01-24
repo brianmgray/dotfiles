@@ -5,7 +5,7 @@ alias name='hostname -f | tee /dev/tty | pbcopy'
 
 # convenience commands
 alias netlify='npx netlify'
-alias ng='node node_modules/.bin/ng'
+# alias ng='node node_modules/.bin/ng'
 
 # environment files
 ALIASES="$ZSH_CUSTOM/10-global-aliases.zsh"

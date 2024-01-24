@@ -1,8 +1,10 @@
 #!/bin/zsh
 # Run to setup new environment
 
+# constants
 NODE=v20.11.0
 NPM=10.3
+ANGULAR_LIBS=('@angular/cli' 'pnpm')
 
 
 autoload -U colors && colors
@@ -28,12 +30,19 @@ function run_if_needed() {
     fi
 }
 
-function run() {
-    # upgrade brew and dependencies
+###
+# upgrade brew and dependencies
+###
+function brew_setup() {
     print_message "updating brew..." yellow
     brew update -v
     brew upgrade && brew upgrade --cask && brew cleanup
+}
 
+###
+# Always required
+###
+function core_setup() {
     # git
     print_message "setting up git..." yellow
     expected=$(brew list --versions git | cut -c 5-)    # git 2.43.0
@@ -56,7 +65,6 @@ function run() {
     if [[ ! -d "$theme_dir" ]]; then
       echo "oh-my-zsh theme not found, pulling..."
       git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$theme_dir"
-      omz reload
     fi
 
     # nvm
@@ -78,8 +86,25 @@ function run() {
     expected="/usr/local/bin/chezmoi"
     actual=$(which chezmoi)
     run_if_needed "chezmoi" "$expected" "$actual" "brew install chezmoi"
+}
 
-    omz reload
+function angular_setup() {
+    print_message "setting up angular global libs..." yellow
+    for lib in $ANGULAR_LIBS; do
+      if npm list -g "$lib" | grep -q "(empty)"; then
+        print_message "\t$lib not installed, installing..." red
+        npm install -g "$lib"
+      fi
+    done;
+    unset lib;
+}
+
+function run() {
+#    brew_setup
+#    core_setup
+    angular_setup
+
+    zsh -i -c "omz reload"
     print_message "Successfully setup new environment" green
 }
 

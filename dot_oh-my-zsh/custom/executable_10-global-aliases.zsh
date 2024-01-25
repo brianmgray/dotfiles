@@ -16,6 +16,9 @@ alias setup='$(chezmoi source-path)/bin/new-env.sh'
 alias cp-to-envfiles='~/workspaces/environment-files/bin/cp-to-envfiles'
 alias cp-from-envfiles='~/workspaces/environment-files/bin/cp-from-envfiles'
 
+# dirs
+alias dcc='~/workspaces/comedy-connector'
+
 # dojo
 # alias mvn='mvn -Djavax.net.ssl.trustStore="~/certs/trust.jks"'
 # alias gradle='gradle -Djavax.net.ssl.trustStore="~/trust.jks"'

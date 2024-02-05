@@ -10,7 +10,7 @@ alias netlify='npx netlify'
 
 # environment files
 ALIASES="$ZSH_CUSTOM/10-global-aliases.zsh"
-alias ea='chezmoi edit $ALIASES && omz reload'
+alias ea='chezmoi edit --apply $ALIASES && omz reload'
 alias fa='less $ALIASES | grep'
 alias setup='$(chezmoi source-path)/bin/new-env.sh'
 alias cp-to-envfiles='~/workspaces/environment-files/bin/cp-to-envfiles'

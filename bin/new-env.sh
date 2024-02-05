@@ -4,7 +4,7 @@
 # constants
 NODE=v20.11.0
 NPM=10.3
-ANGULAR_LIBS=('@angular/cli' 'pnpm')
+ANGULAR_LIBS=('@angular/cli' 'pnpm' 'nx')
 
 
 autoload -U colors && colors

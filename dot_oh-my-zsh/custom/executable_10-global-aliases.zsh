@@ -17,7 +17,7 @@ alias cp-to-envfiles='~/workspaces/environment-files/bin/cp-to-envfiles'
 alias cp-from-envfiles='~/workspaces/environment-files/bin/cp-from-envfiles'
 
 # dirs
-alias dcc='~/workspaces/comedy-connector'
+alias dcc='~/workspaces/comedy-connector-mono'
 
 # dojo
 # alias mvn='mvn -Djavax.net.ssl.trustStore="~/certs/trust.jks"'

@@ -29,6 +29,7 @@
   adda = !git add -A . && git status
   lreset = !git reset HEAD $1 && git checkout -- $1 && git clean -fd
   pushall = !git push --all origin && git push --follow-tags
+  pushr = push -u origin HEAD    
   tbd = for-each-ref --sort=taggerdate --format '%(refname) %(taggerdate)' refs/tags
   sdiff = !git diff && git submodule foreach 'git diff'
   spush = push --recurse-submodules=on-demand

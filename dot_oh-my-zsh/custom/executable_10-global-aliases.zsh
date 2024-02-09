@@ -3,6 +3,7 @@
 # utilities
 alias name='hostname -f | tee /dev/tty | pbcopy'
 alias kexternal="lsof | grep /Volumes/BG\ Archive | awk '{print(\$2)}'  | xargs -I '{}' kill {}"
+alias ktm="lsof | grep /Volumes/BGTimeMachine | awk '{print(\$2)}'  | xargs -I '{}' kill {}"
 
 # convenience commands
 alias netlify='npx netlify'

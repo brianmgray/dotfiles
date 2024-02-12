@@ -30,7 +30,7 @@
   dump = cat-file -p
   undo = reset --soft HEAD~1
   adda = !git add -A . && git status
-  a- = adda = !git add -A . && git status	
+  a = adda = !git add -A . && git status	
   lreset = !git reset HEAD $1 && git checkout -- $1 && git clean -fd
   pushall = !git push --all origin && git push --follow-tags
   pushr = push -u origin HEAD    

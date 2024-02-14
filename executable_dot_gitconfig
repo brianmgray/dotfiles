@@ -23,6 +23,8 @@
   br = bisect reset
       
   # useful
+  unstage = restore --staged
+  unchange = restore
   fa = !git config --list | grep alias | grep
   curbranch = name-rev --name-only HEAD
   find = !git branch -r | grep

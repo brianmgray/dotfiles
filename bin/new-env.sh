@@ -4,7 +4,7 @@
 # constants
 NODE=v20.11.0
 NPM=10.3
-ANGULAR_LIBS=('@angular/cli' 'pnpm' 'nx' 'aws-amplify' 'aws-amplify-angular')
+ANGULAR_LIBS=('@angular/cli' 'pnpm' 'nx' 'aws-amplify' 'aws-amplify-angular' 'serverless')
 
 autoload -U colors && colors
 

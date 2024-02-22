@@ -99,8 +99,8 @@ function angular_setup() {
 }
 
 function run() {
-#    brew_setup
-#    core_setup
+    brew_setup
+    core_setup
     angular_setup
 
     zsh -i -c "omz reload"

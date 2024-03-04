@@ -19,7 +19,9 @@ alias cp-from-envfiles='~/workspaces/environment-files/bin/cp-from-envfiles'
 
 # dirs
 alias dcc='~/workspaces/RainyMrGab/comedy-connector'
- 
+alias df='~/workspaces/fuguUX'
+
+
 # dojo
 # alias mvn='mvn -Djavax.net.ssl.trustStore="~/certs/trust.jks"'
 # alias gradle='gradle -Djavax.net.ssl.trustStore="~/trust.jks"'

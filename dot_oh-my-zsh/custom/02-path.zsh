@@ -3,6 +3,7 @@
 # Setup path
 OLD_PATH=$PATH
 PATH_PIECES=(
+  $HOME/.jenv/bin
   # $PYENV_ROOT/bin
   # $PYTHON_VERSION/bin
   # $PYTHON_PACKAGES
@@ -18,3 +19,5 @@ do
 done
 export PATH=$path
 
+# initialize jenv
+eval "$(jenv init -)"

@@ -80,6 +80,12 @@ function core_setup() {
          nvm alias default $NODE && \
          npm install npm@$NPM"
 
+    # jenv/java
+    print_message "setting up jenv..." yellow
+    expected="master"
+    actual=$(zsh -i -c "jenv doctor" | cut -c -0)                   # TODO
+    run_if_needed "jenv" "1" "1" "brew install jenv"
+
     # chezmoi
     print_message "setting up chezmoi..." yellow
     expected="/usr/local/bin/chezmoi"
@@ -100,9 +106,9 @@ function angular_setup() {
 }
 
 function run() {
-    brew_setup
+    # brew_setup
     core_setup
-    angular_setup
+    # angular_setup
 
     zsh -i -c "omz reload"
     print_message "Successfully setup new environment" green

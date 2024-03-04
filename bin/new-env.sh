@@ -93,6 +93,7 @@ function angular_setup() {
       if npm list -g "$lib" | grep -q "(empty)"; then
         print_message "\t$lib not installed, installing..." red
         npm install -g "$lib"
+	if lib -e "pnpm"; do pnpm setup; fi
       fi
     done;
     unset lib;

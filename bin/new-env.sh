@@ -1,5 +1,10 @@
 #!/bin/zsh
-# Run to setup new environment
+
+#######
+# Helper script to automate setting up and updating a dev environment
+#
+# Usage: `setup [--skip-brew] [--skip-core] [--skip-docker] [--skip-angular]`
+#######
 
 # constants
 NODE=v20.11.0
@@ -7,6 +12,13 @@ NPM=10.3
 ANGULAR_LIBS=('@angular/cli' 'pnpm' 'nx' '@aws-amplify/cli' 'aws-amplify' 'aws-amplify-angular' 'serverless' 'typescript')
 
 autoload -U colors && colors
+
+typeset -A STEP_FUNCTIONS=(
+  'brew' brew_setup
+  'core' core_setup
+  'docker' docker_setup
+  'angular' angular_setup
+)
 
 function print_message() {
     local message="$1"
@@ -82,9 +94,9 @@ function core_setup() {
 
     # jenv/java
     print_message "setting up jenv..." yellow
-    expected="master"
-    actual=$(zsh -i -c "jenv doctor" | cut -c -0)                   # TODO
-    run_if_needed "jenv" "1" "1" "brew install jenv"
+    expected="Jenv is correctly loaded"
+    actual=$(zsh -i -c "jenv doctor" | grep -Eo 'Jenv is correctly loaded' )
+    run_if_needed "jenv" "$expected" "$actual" "brew install jenv"
 
     # chezmoi
     print_message "setting up chezmoi..." yellow
@@ -93,25 +105,63 @@ function core_setup() {
     run_if_needed "chezmoi" "$expected" "$actual" "brew install chezmoi"
 }
 
+function docker_setup() {
+    print_message "setting up docker..." yellow
+    expected="25.0.3"
+    actual=$(docker --version | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')                    # Docker version 25.0.3, build 4debf41
+    run_if_needed "brew" "$expected" "$actual" "brew install docker --cask"
+}
+
 function angular_setup() {
     print_message "setting up angular global libs..." yellow
     for lib in $ANGULAR_LIBS; do
       if npm list -g "$lib" | grep -q "(empty)"; then
         print_message "\t$lib not installed, installing..." red
         npm install -g "$lib"
-	if lib == "pnpm"; then pnpm setup; fi
+        if [[ lib == "pnpm" ]]; then pnpm setup; fi
       fi
     done
     unset lib
 }
 
-function run() {
-    # brew_setup
-    core_setup
-    # angular_setup
-
-    zsh -i -c "omz reload"
-    print_message "Successfully setup new environment" green
+function help() {
+  echo "Invalid arguments passed. Usage:
+    setup [--skip-brew] [--skip-core] [--skip-docker] [--skip-angular]"
+  exit 1
 }
 
-run
+function run() {
+  # define the steps in order with enabled flags
+  typeset -A steps=(
+    'brew' true
+    'core' true
+    'docker' true
+    'angular' true
+  )
+
+  # parse flags
+  while [[ "$#" -gt 0 ]]
+    do
+      case $1 in
+        -sb|--skip-brew) steps[brew]=false;;
+        -sc|--skip-core) steps[core]=false;;
+        -sd|--skip-docker) steps[docker]=false;;
+        -sa|--skip-angular) steps[angular]=false;;
+        *) help
+      esac
+      shift
+    done
+
+  # execute each enabled step
+  for key val in "${(@kv)steps}"; do
+    if [[ $val == true ]];
+    then
+      eval "$STEP_FUNCTIONS[$key]"
+    fi
+  done
+
+  zsh -i -c "omz reload"
+  print_message "Successfully setup new environment" green
+}
+
+run $@

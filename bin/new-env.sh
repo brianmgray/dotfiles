@@ -2,8 +2,6 @@
 
 #######
 # Helper script to automate setting up and updating a dev environment
-#
-# Usage: `setup [--skip-brew] [--skip-core] [--skip-docker] [--skip-angular]`
 #######
 
 # constants
@@ -17,6 +15,7 @@ typeset -A STEP_FUNCTIONS=(
   'brew' brew_setup
   'core' core_setup
   'docker' docker_setup
+  'hugo' hugo_setup
   'angular' angular_setup
 )
 
@@ -124,9 +123,26 @@ function angular_setup() {
     unset lib
 }
 
+function hugo_setup() {
+    print_message "setting up go..." yellow
+    expected="1.22.0"
+    actual=$(go version | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
+    run_if_needed "brew" "$expected" "$actual" "brew install golang"
+
+    print_message "setting up dart sass..." yellow
+    expected="1.71.1"
+    actual=$(sass --version)
+    run_if_needed "brew" "$expected" "$actual" "brew install sass/sass/sass"
+
+    print_message "setting up hugo..." yellow
+    expected="v0.123.7"
+    actual=$(hugo version | grep -Eo 'v[0-9]+\.[0-9]+\.[0-9]+')
+    run_if_needed "brew" "$expected" "$actual" "brew install hugo"
+}
+
 function help() {
   echo "Invalid arguments passed. Usage:
-    setup [--skip-brew] [--skip-core] [--skip-docker] [--skip-angular]"
+    setup [--skip-brew] [--skip-core] [--skip-docker] [--skip-hugo] [--skip-angular]"
   exit 1
 }
 
@@ -136,6 +152,7 @@ function run() {
     'brew' true
     'core' true
     'docker' true
+    'hugo' true
     'angular' true
   )
 
@@ -146,6 +163,7 @@ function run() {
         -sb|--skip-brew) steps[brew]=false;;
         -sc|--skip-core) steps[core]=false;;
         -sd|--skip-docker) steps[docker]=false;;
+        -sh|--skip-hugo) steps[hugo]=false;;
         -sa|--skip-angular) steps[angular]=false;;
         *) help
       esac

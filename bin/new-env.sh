@@ -14,6 +14,7 @@ autoload -U colors && colors
 typeset -A STEP_FUNCTIONS=(
   'brew' brew_setup
   'core' core_setup
+  'java' java_setup
   'docker' docker_setup
   'node' node_setup
 )
@@ -76,17 +77,19 @@ function core_setup() {
       git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$theme_dir"
     fi
 
-    # jenv/java
-    print_message "setting up jenv..." yellow
-    expected="Jenv is correctly loaded"
-    actual=$(zsh -i -c "jenv doctor" | grep -Eo 'Jenv is correctly loaded' )
-    run_if_needed "jenv" "$expected" "$actual" "brew install jenv"
-
     # chezmoi
     print_message "setting up chezmoi..." yellow
     expected="/usr/local/bin/chezmoi"
     actual=$(which chezmoi)
     run_if_needed "chezmoi" "$expected" "$actual" "brew install chezmoi"
+}
+
+function java_setup() {
+    # jenv/java
+    print_message "setting up jenv..." yellow
+    expected="Jenv is correctly loaded"
+    actual=$(zsh -i -c "jenv doctor" | grep -Eo 'Jenv is correctly loaded' )
+    run_if_needed "jenv" "$expected" "$actual" "brew install jenv"
 }
 
 function docker_setup() {
@@ -125,7 +128,7 @@ function node_setup() {
 
 function help() {
   echo "Invalid arguments passed. Usage:
-    setup [--skip-brew] [--skip-core] [--skip-docker] [--skip-node]"
+    setup [--skip-brew] [--skip-core] [--skip-java] [--skip-docker] [--skip-node]"
   exit 1
 }
 
@@ -134,6 +137,7 @@ function run() {
   typeset -A steps=(
     'brew' true
     'core' true
+    'java' true
     'docker' true
     'node' true
   )
@@ -144,6 +148,7 @@ function run() {
       case $1 in
         -sb|--skip-brew) steps[brew]=false;;
         -sc|--skip-core) steps[core]=false;;
+        -sj|--skip-java) steps[java]=false;;
         -sd|--skip-docker) steps[docker]=false;;
         -sn|--skip-node) steps[node]=false;;
         *) help

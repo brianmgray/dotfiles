@@ -15,8 +15,7 @@ typeset -A STEP_FUNCTIONS=(
   'brew' brew_setup
   'core' core_setup
   'docker' docker_setup
-  'hugo' hugo_setup
-  'angular' angular_setup
+  'node' node_setup
 )
 
 function print_message() {
@@ -77,20 +76,6 @@ function core_setup() {
       git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$theme_dir"
     fi
 
-    # nvm
-    print_message "setting up nvm..." yellow
-    # Check if NVM is installed
-    NVM_PATH="$HOME/.nvm/nvm.sh"
-    if [ ! -f "$NVM_PATH" ]; then
-      PROFILE=/dev/null zsh -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash'
-    fi
-    expected="$NODE"
-    actual=$(zsh -i -c "nvm current")
-    run_if_needed "nvm" "$expected" "$actual" \
-        "nvm install $NODE && \
-         nvm alias default $NODE && \
-         npm install npm@$NPM"
-
     # jenv/java
     print_message "setting up jenv..." yellow
     expected="Jenv is correctly loaded"
@@ -111,7 +96,22 @@ function docker_setup() {
     run_if_needed "brew" "$expected" "$actual" "brew install docker --cask"
 }
 
-function angular_setup() {
+function node_setup() {
+
+    # nvm
+    print_message "setting up nvm..." yellow
+    # Check if NVM is installed
+    NVM_PATH="$HOME/.nvm/nvm.sh"
+    if [ ! -f "$NVM_PATH" ]; then
+      PROFILE=/dev/null zsh -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash'
+    fi
+    expected="$NODE"
+    actual=$(zsh -i -c "nvm current")
+    run_if_needed "nvm" "$expected" "$actual" \
+        "nvm install $NODE && \
+         nvm alias default $NODE && \
+         npm install npm@$NPM"
+
     print_message "setting up angular global libs..." yellow
     for lib in $ANGULAR_LIBS; do
       if npm list -g "$lib" | grep -q "(empty)"; then
@@ -123,26 +123,9 @@ function angular_setup() {
     unset lib
 }
 
-function hugo_setup() {
-    print_message "setting up go..." yellow
-    expected="1.22.0"
-    actual=$(go version | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
-    run_if_needed "brew" "$expected" "$actual" "brew install golang"
-
-    print_message "setting up dart sass..." yellow
-    expected="1.71.1"
-    actual=$(sass --version)
-    run_if_needed "brew" "$expected" "$actual" "brew install sass/sass/sass"
-
-    print_message "setting up hugo..." yellow
-    expected="v0.123.7"
-    actual=$(hugo version | grep -Eo 'v[0-9]+\.[0-9]+\.[0-9]+')
-    run_if_needed "brew" "$expected" "$actual" "brew install hugo"
-}
-
 function help() {
   echo "Invalid arguments passed. Usage:
-    setup [--skip-brew] [--skip-core] [--skip-docker] [--skip-hugo] [--skip-angular]"
+    setup [--skip-brew] [--skip-core] [--skip-docker] [--skip-node]"
   exit 1
 }
 
@@ -152,8 +135,7 @@ function run() {
     'brew' true
     'core' true
     'docker' true
-    'hugo' true
-    'angular' true
+    'node' true
   )
 
   # parse flags
@@ -163,8 +145,7 @@ function run() {
         -sb|--skip-brew) steps[brew]=false;;
         -sc|--skip-core) steps[core]=false;;
         -sd|--skip-docker) steps[docker]=false;;
-        -sh|--skip-hugo) steps[hugo]=false;;
-        -sa|--skip-angular) steps[angular]=false;;
+        -sn|--skip-node) steps[node]=false;;
         *) help
       esac
       shift

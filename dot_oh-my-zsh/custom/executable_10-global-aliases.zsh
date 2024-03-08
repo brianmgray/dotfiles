@@ -43,7 +43,7 @@ alias dkps='docker ps --format "{{.ID}} - {{.Names}} - {{.Status}} - {{.Image}}"
 dkln() {
   docker logs -f `docker ps | grep $1 | awk '{print $1}'`
 }
-alias dkb='docker build -t ${PWD##*/} .'
+alias dkb='docker build -t ${(L)${PWD##*/}} .'
 alias dkr='docker run -it -p 8080:8080 ${PWD##*/}:latest'
 alias dkri='docker run -it ${PWD##*/}:latest /bin/bash'
 alias dkbr='dkb && dkr'

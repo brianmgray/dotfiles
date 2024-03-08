@@ -44,8 +44,8 @@ dkln() {
   docker logs -f `docker ps | grep $1 | awk '{print $1}'`
 }
 alias dkb='docker build -t ${(L)${PWD##*/}} .'
-alias dkr='docker run -it -p 8080:8080 ${PWD##*/}:latest'
-alias dkri='docker run -it ${PWD##*/}:latest /bin/bash'
+alias dkr='docker run -it -p 8080:8080 ${(L)${PWD##*/}}:latest'
+alias dkri='docker run -it ${(L)${PWD##*/}}:latest /bin/bash'
 alias dkbr='dkb && dkr'
 
 alias dkip='dk image prune -a --filter "until=24h"'

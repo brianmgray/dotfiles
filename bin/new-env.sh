@@ -57,7 +57,7 @@ function core_setup() {
     print_message "setting up git..." yellow
     expected=$(brew list --versions git | cut -c 5-)    # git 2.43.0
     actual=$(git --version | cut -c 13-)                # git version 2.43.0
-    run_if_needed git "$expected" "$actual" "brew install git"
+    run_if_needed git "$expected" "$actual" "brew install git git-gui"
 
     # zsh
     print_message "setting up oh-my-zsh..." yellow

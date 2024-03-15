@@ -7,7 +7,8 @@
 # constants
 NODE=v20.11.0
 NPM=10.3
-ANGULAR_LIBS=('@angular/cli' 'pnpm' 'nx' '@aws-amplify/cli' 'aws-amplify' 'aws-amplify-angular' 'serverless' 'typescript')
+ANGULAR_LIBS=('@angular/cli' 'pnpm' '@aws-amplify/cli' 'aws-amplify' 'aws-amplify-angular' 'typescript')  #skipped
+NPM_GLOBAL_LIBS=('pnpm' 'typescript')
 
 autoload -U colors && colors
 
@@ -115,8 +116,8 @@ function node_setup() {
          nvm alias default $NODE && \
          npm install npm@$NPM"
 
-    print_message "setting up angular global libs..." yellow
-    for lib in $ANGULAR_LIBS; do
+    print_message "setting up global npm libs..." yellow
+    for lib in $NPM_GLOBAL_LIBS; do
       if npm list -g "$lib" | grep -q "(empty)"; then
         print_message "\t$lib not installed, installing..." red
         npm install -g "$lib"

@@ -36,6 +36,7 @@
   lreset = !git reset HEAD $1 && git checkout -- $1 && git clean -fd
   pushall = !git push --all origin && git push --follow-tags
   pushr = push -u origin HEAD    
+  pushf = push -f
   tbd = for-each-ref --sort=taggerdate --format '%(refname) %(taggerdate)' refs/tags
   rdel = push origin --delete
   remote-merged = !git-remote-merged-branches

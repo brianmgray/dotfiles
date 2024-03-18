@@ -38,7 +38,6 @@ alias denv='~/workspaces/environment-files'
 alias azl='az login'
 alias azs='az account set --subscription $AZ_SUBSCRIPTION_ID'
 
-
 ## Docker
 alias dk='docker'
 alias dki='docker images'

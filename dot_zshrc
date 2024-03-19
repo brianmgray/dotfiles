@@ -124,6 +124,6 @@ esac
 # pnpm end
 
 # azure cli
-autoload bashcompinit && bashcompinit
-source $(brew --prefix)/etc/bash_completion.d/az
+autoload -U +X bashcompinit && bashcompinit
+source ~/.oh-my-zsh/custom/plugins/azure-cli/az.completion
 

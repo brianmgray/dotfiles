@@ -20,6 +20,8 @@ alias cp-from-envfiles='~/workspaces/environment-files/bin/cp-from-envfiles'
 # dirs
 alias dcc='~/workspaces/RainyMrGab/comedy-connector'
 alias df='~/workspaces/fuguUX'
+alias dff='~/workspaces/fuguUX/fuguUX-Frontend'
+alias dfa='~/workspaces/fuguUX/fuguUX-WebAnalyzer'
 
 
 # dojo

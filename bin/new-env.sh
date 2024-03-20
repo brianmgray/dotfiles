@@ -85,9 +85,9 @@ function core_setup() {
     run_if_needed "chezmoi" "$expected" "$actual" "brew install chezmoi"
 
     # act
-    print_message "setting up chezmoi..." yellow
+    print_message "setting up act..." yellow
     expected="0.2.60"
-    actual=$(which act)
+    actual=$(act --version | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')  # act version 0.2.60
     run_if_needed "act" "$expected" "$actual" "brew install act"
 }
 

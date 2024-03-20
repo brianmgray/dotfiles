@@ -83,6 +83,12 @@ function core_setup() {
     expected="/usr/local/bin/chezmoi"
     actual=$(which chezmoi)
     run_if_needed "chezmoi" "$expected" "$actual" "brew install chezmoi"
+
+    # act
+    print_message "setting up chezmoi..." yellow
+    expected="0.2.60"
+    actual=$(which act)
+    run_if_needed "act" "$expected" "$actual" "brew install act"
 }
 
 function java_setup() {

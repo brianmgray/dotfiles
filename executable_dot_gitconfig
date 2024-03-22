@@ -22,7 +22,7 @@
   br = bisect reset
 
   # useful
-  cog = "!f() { git co $(git branch | grep $1 | head -n 1) }; f"
+  cog = "!git_cog() { git co $(git branch | grep "$1" | head -n 1); }; git_cog"
   rtrack = !git checkout --track -b $1 origin/$1
   unstage = restore --staged
   unchange = restore

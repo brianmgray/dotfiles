@@ -14,12 +14,12 @@ zstyle ':omz:update' mode auto      # update automatically without asking
 COMPLETION_WAITING_DOTS="true"
 
 # ~~~~~ Plugins ~~~~~~
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git zsh-nvm)
-
 export NVM_AUTO_USE=true
 export NVM_LAZY_LOAD=true
 export NVM_SILENT=true
+
+# Example format: plugins=(rails git textmate ruby lighthouse)
+plugins=(git zsh-nvm)
 
 # Theme
 ZSH_THEME="powerlevel10k/powerlevel10k"

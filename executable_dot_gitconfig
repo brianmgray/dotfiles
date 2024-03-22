@@ -12,7 +12,6 @@
 
   # shortcuts
   co = checkout
-  rtrack = !git checkout --track -b $1 origin/$1
   ci = commit
   st = status
   br = branch
@@ -21,8 +20,10 @@
   bg = bisect good
   bb = bisect bad
   br = bisect reset
-      
+
   # useful
+  cog = "!f() { git co $(git branch | grep $1 | head -n 1) }; f"
+  rtrack = !git checkout --track -b $1 origin/$1
   unstage = restore --staged
   unchange = restore
   fa = !git config --list | grep alias | grep

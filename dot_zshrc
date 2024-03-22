@@ -126,4 +126,3 @@ esac
 # azure cli
 autoload -U +X bashcompinit && bashcompinit
 source ~/.oh-my-zsh/custom/plugins/azure-cli/az.completion
-

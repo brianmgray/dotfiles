@@ -4,21 +4,30 @@
 # Helper script to automate setting up and updating a dev environment
 #######
 
+autoload -U colors && colors
+
 # constants
-NODE=v20.11.0
+NODE="^(v20.11.0|v18.19.1)$"
 NPM=10.3
 ANGULAR_LIBS=('@angular/cli' 'pnpm' '@aws-amplify/cli' 'aws-amplify' 'aws-amplify-angular' 'typescript')  #skipped
 NPM_GLOBAL_LIBS=('pnpm' 'typescript')
 
-autoload -U colors && colors
+typeset -A ZSH_PLUGINS=(
+  'zsh-nvm' 'https://github.com/lukechilds/zsh-nvm'
+  'azure-cli' 'git@github.com:Azure/azure-cli.git'
+)
 
 typeset -A STEP_FUNCTIONS=(
   'brew' brew_setup
+  'zsh' zsh_setup
   'core' core_setup
   'java' java_setup
   'docker' docker_setup
   'node' node_setup
 )
+
+# global flags
+flag_dry_run=false
 
 function print_message() {
     local message="$1"
@@ -32,11 +41,13 @@ function run_if_needed() {
     local actual=$3
     local command=$4
     
-    if [ "$2" = "$3" ]; then
+    if [[ "$expected" =~ "$actual" ]]; then
         print_message "\t$name: Verified correct version [$actual]" green
     else
         print_message "\t$name: Incorrect version. Expected [$expected]. Using [$actual]. Running command." red
-        zsh -i -c "$command"    # some tools (e.g. omz) are only loaded in the interactive shell
+        if [[ $flag_dry_run != true ]]; then
+          zsh -i -c "$command"    # some tools (e.g. omz) are only loaded in the interactive shell
+        fi
         print_message "\t$name: Success."
     fi
 }
@@ -46,8 +57,10 @@ function run_if_needed() {
 ###
 function brew_setup() {
     print_message "updating brew..." yellow
-    brew update -v
-    brew upgrade && brew upgrade --cask && brew cleanup
+    if [[ $flag_dry_run != true ]]; then
+      brew update -v
+      brew upgrade && brew upgrade --cask && brew cleanup
+    fi
 }
 
 ###
@@ -60,24 +73,6 @@ function core_setup() {
     actual=$(git --version | cut -c 13-)                # git version 2.43.0
     run_if_needed git "$expected" "$actual" "brew install git git-gui"
 
-    # zsh
-    print_message "setting up oh-my-zsh..." yellow
-    ## install
-    if [[ ! -f "$ZSH/oh-my-zsh.sh" ]]; then
-      print_message "\toh-my-zsh: running installer" red
-      sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    fi
-    ## update
-    expected="master"
-    actual=$(zsh -i -c "omz version" | cut -c -6)                   # master (d43f03b)
-    run_if_needed "oh-my-zsh" "$expected" "$actual" "omz update && omz reload"
-    ## theme
-    theme_dir=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-    if [[ ! -d "$theme_dir" ]]; then
-      echo "oh-my-zsh theme not found, pulling..."
-      git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$theme_dir"
-    fi
-
     # chezmoi
     print_message "setting up chezmoi..." yellow
     expected="/usr/local/bin/chezmoi"
@@ -89,6 +84,51 @@ function core_setup() {
     expected="0.2.60"
     actual=$(act --version | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')  # act version 0.2.60
     run_if_needed "act" "$expected" "$actual" "brew install act"
+}
+
+###
+# Zsh, themes, plugins
+###
+function zsh_setup() {
+    print_message "setting up oh-my-zsh..." yellow
+
+    ## install
+    print_message "\toh-my-zsh..." yellow
+    if [[ ! -f "$ZSH/oh-my-zsh.sh" ]]; then
+      print_message "\t\toh-my-zsh: running installer" red
+      if [[ $flag_dry_run != true ]]; then
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+      fi
+    fi
+
+    ## update
+    print_message "\toh-my-zsh version..." yellow
+    expected="master"
+    actual=$(zsh -i -c "omz version" | cut -c -6)                   # master (d43f03b)
+    run_if_needed "\t\toh-my-zsh" "$expected" "$actual" "omz update && omz reload"
+
+    ## theme
+    print_message "\toh-my-zsh theme..." yellow
+    theme_dir=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+    if [[ ! -d "$theme_dir" ]]; then
+      print_message "\t\toh-my-zsh theme not found, pulling..." red
+      if [[ $flag_dry_run != true ]]; then
+        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$theme_dir"
+      fi
+    fi
+
+    ## plugins
+    print_message "\toh-my-zsh plugins..." yellow
+    plugin_root_dir=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins
+    for name repo in "${(@kv)ZSH_PLUGINS}"; do
+      plugin_dir=${plugin_root_dir}/$name
+      if [[ ! -d "$plugin_dir" ]]; then
+        print_message "\t\tinstalling plugin ${name}" red
+        if [[ $flag_dry_run != true ]]; then
+          git clone --depth=1 $repo $plugin_dir
+        fi
+      fi
+    done
 }
 
 function java_setup() {
@@ -107,13 +147,15 @@ function docker_setup() {
 }
 
 function node_setup() {
-
     # nvm
     print_message "setting up nvm..." yellow
     # Check if NVM is installed
     NVM_PATH="$HOME/.nvm/nvm.sh"
     if [ ! -f "$NVM_PATH" ]; then
-      PROFILE=/dev/null zsh -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash'
+      print_message "nvm not installed, pulling" red
+      if [[ $flag_dry_run != true ]]; then
+        PROFILE=/dev/null zsh -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash'
+      fi
     fi
     expected="$NODE"
     actual=$(zsh -i -c "nvm current")
@@ -126,8 +168,10 @@ function node_setup() {
     for lib in $NPM_GLOBAL_LIBS; do
       if npm list -g "$lib" | grep -q "(empty)"; then
         print_message "\t$lib not installed, installing..." red
-        npm install -g "$lib"
-        if [[ lib == "pnpm" ]]; then pnpm setup; fi
+        if [[ $flag_dry_run != true ]]; then
+          npm install -g "$lib"
+          if [[ lib == "pnpm" ]]; then pnpm setup; fi
+        fi
       fi
     done
     unset lib
@@ -135,29 +179,32 @@ function node_setup() {
 
 function help() {
   echo "Invalid arguments passed. Usage:
-    setup [--skip-brew] [--skip-core] [--skip-java] [--skip-docker] [--skip-node]"
+    setup [--dry-run] [--brew] [--zsh] [--core] [--java] [--docker] [--node]"
   exit 1
 }
 
 function run() {
   # define the steps in order with enabled flags
   typeset -A steps=(
-    'brew' true
-    'core' true
-    'java' true
-    'docker' true
-    'node' true
+    'brew'   false
+    'core'   false
+    'zsh'    false
+    'java'   false
+    'docker' false
+    'node'   false
   )
 
   # parse flags
   while [[ "$#" -gt 0 ]]
     do
       case $1 in
-        -sb|--skip-brew) steps[brew]=false;;
-        -sc|--skip-core) steps[core]=false;;
-        -sj|--skip-java) steps[java]=false;;
-        -sd|--skip-docker) steps[docker]=false;;
-        -sn|--skip-node) steps[node]=false;;
+        -d|--dry-run) flag_dry_run=true;;
+        -b|--brew) steps[brew]=true;;
+        -c|--core) steps[core]=true;;
+        -z|--zsh) steps[zsh]=true;;
+        -j|--java) steps[java]=true;;
+        -d|--docker) steps[docker]=true;;
+        -n|--node) steps[node]=true;;
         *) help
       esac
       shift
@@ -171,7 +218,7 @@ function run() {
     fi
   done
 
-  zsh -i -c "omz reload"
+  # zsh -i -c "omz reload"
   print_message "Successfully setup new environment" green
 }
 

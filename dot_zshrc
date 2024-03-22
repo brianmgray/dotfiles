@@ -15,7 +15,7 @@ COMPLETION_WAITING_DOTS="true"
 
 # ~~~~~ Plugins ~~~~~~
 export NVM_AUTO_USE=true
-export NVM_LAZY_LOAD=true
+# export NVM_LAZY_LOAD=true
 export NVM_SILENT=true
 
 # Example format: plugins=(rails git textmate ruby lighthouse)

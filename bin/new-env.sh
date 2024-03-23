@@ -101,12 +101,6 @@ function zsh_setup() {
       fi
     fi
 
-    ## update
-    print_message "\toh-my-zsh version..." yellow
-    expected="master"
-    actual=$(zsh -i -c "omz version" | cut -c -6)                   # master (d43f03b)
-    run_if_needed "\t\toh-my-zsh" "$expected" "$actual" "omz update && omz reload"
-
     ## theme
     print_message "\toh-my-zsh theme..." yellow
     theme_dir=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
@@ -129,6 +123,12 @@ function zsh_setup() {
         fi
       fi
     done
+
+    ## update
+    print_message "\toh-my-zsh version..." yellow
+    expected="master"
+    actual=$(zsh -i -c "omz version | cut -c -6")                   # master (d43f03b)
+    run_if_needed "\t\toh-my-zsh" "$expected" "$actual" "omz update && omz reload"
 }
 
 function java_setup() {

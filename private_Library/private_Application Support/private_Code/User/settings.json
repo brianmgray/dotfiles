@@ -12,5 +12,15 @@
     },
     "editor.rulers": [
     120
-    ]
+    ],
+    "redhat.telemetry.enabled": true,
+    "azureResourceGroups.selectedSubscriptions": [
+        "afe70d8e-b1e3-4b22-8334-89d17a0705cf/35f5e667-6175-4b21-ae3e-3b173ee0a1b4"
+    ],
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }

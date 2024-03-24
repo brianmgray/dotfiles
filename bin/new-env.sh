@@ -24,6 +24,7 @@ typeset -A STEP_FUNCTIONS=(
   'java' java_setup
   'docker' docker_setup
   'node' node_setup
+  'intellij' intellij_setup
 )
 
 # global flags
@@ -177,21 +178,23 @@ function node_setup() {
     unset lib
 }
 
+function intellij_setup() {
+    # chezmoi
+    print_message "setting up intellij..." yellow
+    expected="/usr/local/bin/webstorm"
+    actual=$(which webstorm)
+    run_if_needed "webstorm" "$expected" "$actual" "brew install --cask webstorm"
+}
+
 function help() {
   echo "Invalid arguments passed. Usage:
-    setup [--dry-run] [--brew] [--zsh] [--core] [--java] [--docker] [--node]"
+    setup [--dry-run] [--brew] [--zsh] [--core] [--java] [--docker] [--node] [--intellij]"
   exit 1
 }
 
 function run() {
   # define the steps in order with enabled flags
   typeset -A steps=(
-    'brew'   false
-    'core'   false
-    'zsh'    false
-    'java'   false
-    'docker' false
-    'node'   false
   )
 
   # parse flags
@@ -205,6 +208,7 @@ function run() {
         -j|--java) steps[java]=true;;
         -d|--docker) steps[docker]=true;;
         -n|--node) steps[node]=true;;
+        -i|--intellij|--webstorm) steps[intellij]=true;;
         *) help
       esac
       shift

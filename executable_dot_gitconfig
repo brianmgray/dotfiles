@@ -22,8 +22,8 @@
   br = bisect reset
 
   # branches
-  co121 = co brian/fug-121-convert-to-hybrid-react-single
-  co121s = brian/fug-121-convert-to-hybrid-react-swa
+  co121s = co brian/fug-121-convert-to-hybrid-react-single
+  co121 = brian/fug-121-convert-to-hybrid-react-swa
 
   # useful
   cog = "!git_cog() { git co $(git branch | grep "$1" | head -n 1); }; git_cog"

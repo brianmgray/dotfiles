@@ -24,14 +24,13 @@ alias dff='~/workspaces/fuguUX/fuguUX-Frontend'
 alias dfa='~/workspaces/fuguUX/fuguUX-WebAnalyzer'
 
 
-# dojo
-# alias mvn='mvn -Djavax.net.ssl.trustStore="~/certs/trust.jks"'
-# alias gradle='gradle -Djavax.net.ssl.trustStore="~/trust.jks"'
-# alias gradlew='./gradlew -Djavax.net.ssl.trustStore="~/certs/trust.jks"'
-
 # working directories
 ## admin
 alias denv='~/workspaces/environment-files'
+
+# fugu
+alias gapr='NODE_ENV=production act pull_request  -W .github/workflows/pr.yaml --secret-file .env.development.local'
+alias gam='NODE_ENV=production act pull_request  -W .github/workflows/main.yaml --secret-file .env.development.local'
 
 
 # Tool Aliases

@@ -179,10 +179,9 @@ function node_setup() {
 }
 
 function intellij_setup() {
-    # chezmoi
     print_message "setting up intellij..." yellow
-    expected="/usr/local/bin/webstorm"
-    actual=$(which webstorm)
+    expected="webstorm"
+    actual=$(which webstorm | grep -Eo webstorm)
     run_if_needed "webstorm" "$expected" "$actual" "brew install --cask webstorm"
 }
 
@@ -209,6 +208,15 @@ function run() {
         -d|--docker) steps[docker]=true;;
         -n|--node) steps[node]=true;;
         -i|--intellij|--webstorm) steps[intellij]=true;;
+        -a|--all)
+            steps[brew]=true
+            steps[core]=true
+            steps[zsh]=true
+            steps[java]=true
+            steps[docker]=true
+            steps[node]=true
+            steps[intellij]=true
+            ;;
         *) help
       esac
       shift

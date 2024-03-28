@@ -7,7 +7,7 @@
 autoload -U colors && colors
 
 # constants
-NODE="^(v20.11.0|v18.19.1)$"
+NODE="^(v20.11|v18.19)$"
 NPM=10.3
 ANGULAR_LIBS=('@angular/cli' 'pnpm' '@aws-amplify/cli' 'aws-amplify' 'aws-amplify-angular' 'typescript')  #skipped
 NPM_GLOBAL_LIBS=('pnpm' 'typescript')
@@ -76,8 +76,8 @@ function core_setup() {
 
     # chezmoi
     print_message "setting up chezmoi..." yellow
-    expected="/usr/local/bin/chezmoi"
-    actual=$(which chezmoi)
+    expected="chezmoi"
+    actual=$(which chezmoi | grep -Eo 'chezmoi')
     run_if_needed "chezmoi" "$expected" "$actual" "brew install chezmoi"
 
     # act
@@ -159,7 +159,7 @@ function node_setup() {
       fi
     fi
     expected="$NODE"
-    actual=$(zsh -i -c "nvm current")
+    actual=$(zsh -i -c "nvm current | grep -Eo '[0-9]+\.[0-9]+'")
     run_if_needed "nvm" "$expected" "$actual" \
         "nvm install $NODE && \
          nvm alias default $NODE && \

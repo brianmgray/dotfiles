@@ -9,8 +9,10 @@ autoload -U colors && colors
 # constants
 NODE="^(v20.11|v18.19)$"
 NPM=10.3
+BREW_APPS=('iterm2' 'webstorm')
 ANGULAR_LIBS=('@angular/cli' 'pnpm' '@aws-amplify/cli' 'aws-amplify' 'aws-amplify-angular' 'typescript')  #skipped
 NPM_GLOBAL_LIBS=('pnpm' 'typescript')
+THEME_FONTS=('MesloLGS%20NF%20Regular.ttf' 'MesloLGS%20NF%20Bold.ttf' 'MesloLGS%20NF%20Italic.ttf' 'MesloLGS%20NF%20Bold%20Italic.ttf')
 
 typeset -A ZSH_PLUGINS=(
   'zsh-nvm' 'https://github.com/lukechilds/zsh-nvm'
@@ -19,12 +21,12 @@ typeset -A ZSH_PLUGINS=(
 
 typeset -A STEP_FUNCTIONS=(
   'brew' brew_setup
+  'apps' apps_setup
   'zsh' zsh_setup
   'core' core_setup
   'java' java_setup
   'docker' docker_setup
   'node' node_setup
-  'intellij' intellij_setup
 )
 
 # global flags
@@ -102,6 +104,16 @@ function zsh_setup() {
       fi
     fi
 
+    ## fonts
+    print_message "\toh-my-zsh fonts..." yellow
+    fonts_src="https://github.com/romkatv/powerlevel10k-media/raw/master/"
+    fonts_dir=/Library/Fonts/
+    for font in "${THEME_FONTS[@]}"; do
+      expected="${font}"
+      actual=$(ls "${fonts_dir}" | grep -F "${font}")
+      run_if_needed "\ttheme font $font" "$expected" "$actual" "curl -sSL \"${fonts_src}${font}\" -o \"${fonts_dir}${expected}\""
+    done
+
     ## theme
     print_message "\toh-my-zsh theme..." yellow
     theme_dir=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
@@ -178,16 +190,18 @@ function node_setup() {
     unset lib
 }
 
-function intellij_setup() {
-    print_message "setting up intellij..." yellow
-    expected="webstorm"
-    actual=$(which webstorm | grep -Eo webstorm)
-    run_if_needed "webstorm" "$expected" "$actual" "brew install --cask webstorm"
+function apps_setup() {
+    print_message "setting up apps..." yellow
+    for app in $BREW_APPS; do
+      expected=${app}
+      actual=$(brew list | grep ${app})
+      run_if_needed "app" "$expected" "$actual" "brew install --cask ${app}"
+    done
 }
 
 function help() {
   echo "Invalid arguments passed. Usage:
-    setup [--dry-run] [--brew] [--zsh] [--core] [--java] [--docker] [--node] [--intellij]"
+    setup [--dry-run] [--brew] [-apps] [--zsh] [--core] [--java] [--docker] [--node]"
   exit 1
 }
 
@@ -202,20 +216,20 @@ function run() {
       case $1 in
         -d|--dry-run) flag_dry_run=true;;
         -b|--brew) steps[brew]=true;;
+        -p|--apps) steps[apps]=true;;
         -c|--core) steps[core]=true;;
         -z|--zsh) steps[zsh]=true;;
         -j|--java) steps[java]=true;;
         -d|--docker) steps[docker]=true;;
         -n|--node) steps[node]=true;;
-        -i|--intellij|--webstorm) steps[intellij]=true;;
         -a|--all)
             steps[brew]=true
+            steps[apps]=true
             steps[core]=true
             steps[zsh]=true
             steps[java]=true
             steps[docker]=true
             steps[node]=true
-            steps[intellij]=true
             ;;
         *) help
       esac

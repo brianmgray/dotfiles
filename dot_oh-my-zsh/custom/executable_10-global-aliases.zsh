@@ -3,7 +3,9 @@
 # utilities
 alias name='hostname -f | tee /dev/tty | pbcopy'
 alias kexternal="lsof | grep /Volumes/BG\ Archive | awk '{print(\$2)}'  | xargs -I '{}' kill {}"
+alias kbackup="lsof | grep /Volumes/BG\ Backup | awk '{print(\$2)}'  | xargs -I '{}' kill {}"
 alias ktm="lsof | grep /Volumes/BGTimeMachine | awk '{print(\$2)}'  | xargs -I '{}' kill {}"
+alias spacer="defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'"
 
 # convenience commands
 alias netlify='npx netlify'

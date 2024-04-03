@@ -7,9 +7,10 @@
 autoload -U colors && colors
 
 # constants
+JAVA_VERSION=21\.0\.2
 NODE="^(v20.11|v18.19)$"
 NPM=10.3
-BREW_APPS=('iterm2' 'webstorm')
+BREW_APPS=('iterm2' 'webstorm' 'azure-cli')
 ANGULAR_LIBS=('@angular/cli' 'pnpm' '@aws-amplify/cli' 'aws-amplify' 'aws-amplify-angular' 'typescript')  #skipped
 NPM_GLOBAL_LIBS=('pnpm' 'typescript')
 THEME_FONTS=('MesloLGS%20NF%20Regular.ttf' 'MesloLGS%20NF%20Bold.ttf' 'MesloLGS%20NF%20Italic.ttf' 'MesloLGS%20NF%20Bold%20Italic.ttf')
@@ -150,6 +151,16 @@ function java_setup() {
     expected="Jenv is correctly loaded"
     actual=$(zsh -i -c "jenv doctor" | grep -Eo 'Jenv is correctly loaded' )
     run_if_needed "jenv" "$expected" "$actual" "brew install jenv"
+
+    print_message "setting up java..." yellow
+    expected="$JAVA_VERSION"
+    actual=$(jenv versions | grep -Eo "$JAVA_VERSION" | head -n 1 )
+    run_if_needed "java" "$expected" "$actual" "brew install openjdk \
+      brew pin openjdk \
+      sudo ln -sfn /opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-21.jdk \
+      jenv add /Library/Java/JavaVirtualMachines/openjdk-21.jdk/Contents/Home/ \
+      jenv global 21
+      "
 }
 
 function docker_setup() {

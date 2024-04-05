@@ -10,7 +10,8 @@ autoload -U colors && colors
 JAVA_VERSION=21\.0\.2
 NODE="^(v20.11|v18.19)$"
 NPM=10.3
-BREW_APPS=('iterm2' 'webstorm' 'azure-cli')
+BREW_APPS=('azure-cli' 'jq')
+CASK_APPS=('iterm2' 'webstorm' 'azure-cli')
 ANGULAR_LIBS=('@angular/cli' 'pnpm' '@aws-amplify/cli' 'aws-amplify' 'aws-amplify-angular' 'typescript')  #skipped
 NPM_GLOBAL_LIBS=('pnpm' 'typescript')
 THEME_FONTS=('MesloLGS%20NF%20Regular.ttf' 'MesloLGS%20NF%20Bold.ttf' 'MesloLGS%20NF%20Italic.ttf' 'MesloLGS%20NF%20Bold%20Italic.ttf')
@@ -204,6 +205,11 @@ function node_setup() {
 function apps_setup() {
     print_message "setting up apps..." yellow
     for app in $BREW_APPS; do
+      expected=${app}
+      actual=$(brew list | grep ${app})
+      run_if_needed "app" "$expected" "$actual" "brew install ${app}"
+    done
+    for app in $CASK_APPS; do
       expected=${app}
       actual=$(brew list | grep ${app})
       run_if_needed "app" "$expected" "$actual" "brew install --cask ${app}"

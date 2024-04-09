@@ -13,7 +13,7 @@ NPM=10.3
 BREW_APPS=('azure-cli' 'jq')
 CASK_APPS=('iterm2' 'webstorm' 'azure-cli')
 ANGULAR_LIBS=('@angular/cli' 'pnpm' '@aws-amplify/cli' 'aws-amplify' 'aws-amplify-angular' 'typescript')  #skipped
-NPM_GLOBAL_LIBS=('pnpm' 'typescript')
+NPM_GLOBAL_LIBS=('pnpm' 'typescript' '@azure/static-web-apps-cli')
 THEME_FONTS=('MesloLGS%20NF%20Regular.ttf' 'MesloLGS%20NF%20Bold.ttf' 'MesloLGS%20NF%20Italic.ttf' 'MesloLGS%20NF%20Bold%20Italic.ttf')
 
 typeset -A ZSH_PLUGINS=(

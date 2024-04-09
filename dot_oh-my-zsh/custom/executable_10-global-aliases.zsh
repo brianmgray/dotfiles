@@ -10,6 +10,7 @@ alias spacer="defaults write com.apple.dock persistent-apps -array-add '{tile-da
 # convenience commands
 alias netlify='npx netlify'
 # alias ng='node node_modules/.bin/ng'
+alias act='act --container-architecture linux/amd64'
 
 # environment files
 ALIASES="$ZSH_CUSTOM/10-global-aliases.zsh"

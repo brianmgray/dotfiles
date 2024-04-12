@@ -23,5 +23,5 @@
     "[typescriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "workbench.colorTheme": "Monokai Dimmed"
+    "workbench.colorTheme": "Default High Contrast"
 }

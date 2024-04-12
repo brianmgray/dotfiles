@@ -17,7 +17,7 @@ NPM_GLOBAL_LIBS=('pnpm' 'typescript' '@azure/static-web-apps-cli')
 THEME_FONTS=('MesloLGS%20NF%20Regular.ttf' 'MesloLGS%20NF%20Bold.ttf' 'MesloLGS%20NF%20Italic.ttf' 'MesloLGS%20NF%20Bold%20Italic.ttf')
 
 typeset -A ZSH_PLUGINS=(
-  'zsh-nvm' 'https://github.com/lukechilds/zsh-nvm'
+  'zsh-nvm' 'git@github.com:gentslava/zsh-nvm.git'
   'azure-cli' 'git@github.com:Azure/azure-cli.git'
 )
 

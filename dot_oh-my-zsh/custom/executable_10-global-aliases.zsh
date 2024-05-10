@@ -10,7 +10,7 @@ alias spacer="defaults write com.apple.dock persistent-apps -array-add '{tile-da
 # convenience commands
 alias netlify='npx netlify'
 # alias ng='node node_modules/.bin/ng'
-alias act='act --container-architecture linux/amd64'
+# alias act='act --container-architecture linux/amd64'
 
 # environment files
 ALIASES="$ZSH_CUSTOM/10-global-aliases.zsh"
@@ -41,6 +41,13 @@ alias gam='NODE_ENV=production act pull_request  -W .github/workflows/main.yaml 
 ## Azure
 alias azl='az login'
 alias azs='az account set --subscription $AZ_SUBSCRIPTION_ID'
+
+## npm
+alias no='npm outdated'
+alias nds='npm update --save'
+alias nis='npm install --save'
+alias nid='npm install -D'
+alias nus='npm uninstall --save'
 
 ## Docker
 alias dk='docker'
@@ -75,6 +82,11 @@ alias python37='/Library/Frameworks/Python.framework/Versions/3.7/bin/python3'
 
 ## mvn
 alias mi='mvn install'
+
+## github
+alias ghcl='gh cache list'
+alias ghcd='gh cache delete'
+
 
 # system aliases
 # alias vi='vim' # included in git

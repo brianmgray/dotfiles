@@ -9,6 +9,7 @@
 [alias]
   # convenience    
   m = checkout main
+  ms = checkout master
 
   # shortcuts
   co = checkout
@@ -22,11 +23,13 @@
   br = bisect reset
 
   # branches
-  cost = co brian/fug-145-create-brian-stack
-  coe2e = co brian/fug-133-incorporate-screenshots-into-the-report
 
   # useful
   cog = "!git_cog() { git co $(git branch | grep "$1" | head -n 1); }; git_cog"
+  d = diff
+  dc = diff --cached
+  dp = diff HEAD~1 HEAD
+  dp2 = diff HEAD~2 HEAD~1
   rtrack = !git checkout --track -b $1 origin/$1
   unstage = restore --staged
   unchange = restore

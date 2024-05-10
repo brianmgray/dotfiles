@@ -11,17 +11,26 @@
         "editor.defaultFormatter": "vscode.json-language-features"
     },
     "editor.rulers": [
-    120
+        120
     ],
     "redhat.telemetry.enabled": true,
     "azureResourceGroups.selectedSubscriptions": [
         "afe70d8e-b1e3-4b22-8334-89d17a0705cf/35f5e667-6175-4b21-ae3e-3b173ee0a1b4"
     ],
     "[json]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+        "editor.defaultFormatter": "vscode.json-language-features"
     },
     "[typescriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "workbench.colorTheme": "Default High Contrast"
+    "gitlens.ai.experimental.provider": "openai",
+    "gitlens.ai.experimental.openai.model": "gpt-3.5-turbo-1106",
+    "vscode-gjf.execJarPath": "/opt/homebrew/bin/google-java-format",
+    "editor.formatOnSave": true,
+    "[java]": {
+        "editor.defaultFormatter": "redhat.java"
+    },
+    "[java]": {
+        "editor.defaultFormatter": "foxundermoon.java-formatter"
+    }
 }

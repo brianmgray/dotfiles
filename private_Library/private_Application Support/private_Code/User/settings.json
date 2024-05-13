@@ -26,11 +26,4 @@
     "gitlens.ai.experimental.provider": "openai",
     "gitlens.ai.experimental.openai.model": "gpt-3.5-turbo-1106",
     "vscode-gjf.execJarPath": "/opt/homebrew/bin/google-java-format",
-    "editor.formatOnSave": true,
-    "[java]": {
-        "editor.defaultFormatter": "redhat.java"
-    },
-    "[java]": {
-        "editor.defaultFormatter": "foxundermoon.java-formatter"
-    }
 }

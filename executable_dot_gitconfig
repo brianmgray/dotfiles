@@ -14,8 +14,10 @@
   # shortcuts
   co = checkout
   ci = commit
-  cim = commit -m
-  ciam = commit -am
+  ca = commit --amend
+  cm = commit -m
+  cam = commit -am
+  caa = commit -a --amend
   st = status
   br = branch
   r = rebase

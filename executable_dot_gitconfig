@@ -14,9 +14,16 @@
   # shortcuts
   co = checkout
   ci = commit
+  cim = commit -m
+  ciam = commit -am
   st = status
   br = branch
+  r = rebase
+  rc = rebase --continue
+  ra = rebase --abort
   cp = cherry-pick
+  cpc = cherry-pick --continue
+  cpa = cherry-pick --abort
   bs = bisect start
   bg = bisect good
   bb = bisect bad

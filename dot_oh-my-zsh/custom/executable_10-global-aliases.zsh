@@ -45,6 +45,7 @@ alias azs='az account set --subscription $AZ_SUBSCRIPTION_ID'
 ## npm
 alias no='npm outdated'
 alias nds='npm update --save'
+alias ndd='npm update -D'
 alias nis='npm install --save'
 alias nid='npm install -D'
 alias nus='npm uninstall --save'

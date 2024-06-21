@@ -35,10 +35,10 @@
 
   # useful
   cog = "!git_cog() { git co $(git branch | grep "$1" | head -n 1); }; git_cog"
-  d = diff
-  dc = diff --cached
-  dp = diff HEAD~1 HEAD
-  dp2 = diff HEAD~2 HEAD~1
+  d = "!f() { git diff "$@" -- . :^pnpm-lock.yaml; }; f"
+  dc = d --cached
+  dp = d HEAD~1 HEAD
+  dp2 = d HEAD~2 HEAD~1
   rtrack = !git checkout --track -b $1 origin/$1
   unstage = restore --staged
   unchange = restore

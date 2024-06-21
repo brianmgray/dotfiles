@@ -21,11 +21,21 @@ alias cp-to-envfiles='~/workspaces/environment-files/bin/cp-to-envfiles'
 alias cp-from-envfiles='~/workspaces/environment-files/bin/cp-from-envfiles'
 
 # dirs
+ANALYZER_DIR=~/workspaces/fuguUX/fuguUX-WebAnalyzer
 alias dcc='~/workspaces/RainyMrGab/comedy-connector'
 alias df='~/workspaces/fuguUX'
 alias dff='~/workspaces/fuguUX/fuguUX-Frontend'
-alias dfa='~/workspaces/fuguUX/fuguUX-WebAnalyzer'
+alias dfa='$ANALYZER_DIR'
+alias dft='~/workspaces/fuguUX/fuguUX-tools'
+alias dfr='~/workspaces/fuguUX/fuguUX-releases'
 
+# llm
+alias dfai='${ANALYZER_DIR}/ml/heuristics/info-scent'
+alias dfam='${ANALYZER_DIR}/ml/heuristics/minimalist-design'
+alias dfac='${ANALYZER_DIR}/ml/heuristics/consistency'
+
+# brian
+alias dns='~/workspaces/brian/next-sandbox'
 
 # working directories
 ## admin

@@ -43,3 +43,5 @@ esac
 # azure cli
 autoload -U +X bashcompinit && bashcompinit
 source ~/.oh-my-zsh/custom/plugins/azure-cli/az.completion
+
+source /Users/brian/.config/broot/launcher/bash/br

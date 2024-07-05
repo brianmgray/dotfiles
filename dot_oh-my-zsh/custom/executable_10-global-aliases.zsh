@@ -28,6 +28,7 @@ alias dff='~/workspaces/fuguUX/fuguUX-Frontend'
 alias dfa='$ANALYZER_DIR'
 alias dft='~/workspaces/fuguUX/fuguUX-tools'
 alias dfr='~/workspaces/fuguUX/fuguUX-releases'
+alias dfo='~/workspaces/fuguUX/.github-private'
 
 # llm
 alias dfai='${ANALYZER_DIR}/ml/heuristics/info-scent'

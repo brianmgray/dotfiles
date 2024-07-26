@@ -1,0 +1,55 @@
+#!/bin/bash
+
+#####
+#
+# This is a git post-fetch hook that deletes local branches that have been recently
+# deleted on the remote. It will ignore any with the prefixes in IGNORE_PREFIXES.
+#
+####
+
+IGNORE_PREFIXES=("save/" "bak/")
+
+# Get the list of remote-tracking branches
+remote_tracking_branches=$(git branch -r | sed 's/origin\///')
+
+# Get the list of local branches that are tracking a remote branch
+local_tracking_branches=$(git for-each-ref --format='%(refname:short)' refs/heads/ | while read branch; do
+  if [ "$(git config branch.$branch.remote)" == "origin" ]; then
+    echo $branch
+  fi
+done)
+
+branches_to_delete=()
+
+for branch in $local_tracking_branches; do
+  for prefix in "${IGNORE_PREFIXES[@]}"; do
+    if [[ $branch == $prefix* ]]; then
+      continue 2
+    fi
+  done
+
+  if ! echo "$remote_tracking_branches" | grep -q -w "$branch"; then
+    branches_to_delete+=("$branch")
+  fi
+done
+
+# If there are branches to delete, prompt the user for confirmation
+if [ ${#branches_to_delete[@]} -gt 0 ]; then
+  echo "The following branches will be deleted:"
+  IFS=$'\n' echo -e "\t${branches_to_delete[*]}\n"
+
+  # shellcheck disable=SC2162
+  read -n 1 -p "Are you sure you want to delete these branches? (Y/n): " confirm
+  echo ""
+  confirm=${confirm:-Y}
+  if [[ $confirm == [yY] ]]; then
+    for branch in "${branches_to_delete[@]}"; do
+      echo "Remote deleted, deleting local branch [$branch]"
+      git branch -D "$branch"
+    done
+  else
+    echo "No branches were deleted."
+  fi
+else
+  echo "No branches to delete."
+fi

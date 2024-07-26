@@ -36,6 +36,7 @@
   # useful
   cog = "!git_cog() { git co $(git branch | grep "$1" | head -n 1); }; git_cog"
   rfp = "!f() { set -x; git rebase --onto "$1" HEAD~$(( $2 + 1 )); }; f"
+  addg = "!f() { git ls-files | grep \"$1\" | xargs git add; git st; }; f"
   d = "!f() { git diff "$@" -- . :^pnpm-lock.yaml; }; f"
   dc = d --cached
   dp = d HEAD~1 HEAD

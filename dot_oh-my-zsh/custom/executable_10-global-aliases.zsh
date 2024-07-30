@@ -43,8 +43,6 @@ alias dns='~/workspaces/brian/next-sandbox'
 alias denv='~/workspaces/environment-files'
 
 # fugu
-alias gapr='NODE_ENV=production act pull_request  -W .github/workflows/pr.yaml --secret-file .env.development.local'
-alias gam='NODE_ENV=production act pull_request  -W .github/workflows/main.yaml --secret-file .env.development.local'
 
 
 # Tool Aliases

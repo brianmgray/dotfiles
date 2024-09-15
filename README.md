@@ -11,7 +11,8 @@ chezmoi init --ssh --apply brianmgray       # pulls latest dotfiles from github
 setup                                       # setup runs a setup script to install/update all necessary tools 
 ```
 
-In iTerm, change the Profile font to MesloLGS NF.
+In iTerm, change the Profile font to MesloLGS NF. Also enable this option for broot:
+![iTerm settings](docs/images/broot-screenshot.png)
 
 ## For more
 

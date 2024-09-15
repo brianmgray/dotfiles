@@ -207,7 +207,11 @@ function apps_setup() {
     for app in $BREW_APPS; do
       expected=${app}
       actual=$(brew list | grep ${app})
-      run_if_needed "app" "$expected" "$actual" "brew install ${app}"
+      if [[ app == "broot" ]]; then
+      	run_if_needed "app" "$expected" "$actual" "brew install broot && broot --install"
+      else
+	run_if_needed "app" "$expected" "$actual" "brew install ${app}"
+      fi
     done
     for app in $CASK_APPS; do
       expected=${app}

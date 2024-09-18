@@ -7,10 +7,10 @@
 autoload -U colors && colors
 
 # constants
-JAVA_VERSION=21\.0\.2
+JAVA_VERSION=21\.0\.3
 NODE="^(v20.11|v18.19)$"
 NPM=10.3
-BREW_APPS=('azure-cli' 'jq' 'act' 'broot' 'bufbuild/buf/buf' 'go')
+BREW_APPS=('azure-cli' 'jq' 'act' 'broot' 'bufbuild/buf/buf' 'go' 'adr-tools')
 CASK_APPS=('iterm2' 'intellij-idea' 'postman' 'microsoft-azure-storage-explorer')
 ANGULAR_LIBS=('@angular/cli' 'pnpm' '@aws-amplify/cli' 'aws-amplify' 'aws-amplify-angular' 'typescript')  #skipped
 NPM_GLOBAL_LIBS=('pnpm' 'typescript' '@azure/static-web-apps-cli')

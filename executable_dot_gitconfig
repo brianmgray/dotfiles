@@ -37,6 +37,7 @@
   cog = "!git_cog() { git co $(git branch | grep "$1" | head -n 1); }; git_cog"
   rfp = "!f() { set -x; git rebase --onto "$1" HEAD~$(( $2 + 1 )); }; f"
   addg = "!f() { git ls-files | grep \"$1\" | xargs git add; git st; }; f"
+  exg = "!f() { pattern=\"$1\"; shift; cmd=\"$1\"; shift; git ls-files | grep -E \"$pattern\" | xargs -r git $cmd \"$@\"; git st;}; f"
   d = "!f() { git diff "$@" -- . :^pnpm-lock.yaml; }; f"
   dc = d --cached
   dp = d HEAD~1 HEAD
@@ -44,6 +45,8 @@
   rtrack = !git checkout --track -b $1 origin/$1
   unstage = restore --staged
   unchange = restore
+  reseto = !git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)
+  # reseto = "!git_reseto() { git reset --hard origin/$(git rev-parse --abbrev-ref HEAD); }; git_reseto"
   fa = !git config --list | grep alias | grep
   curbranch = name-rev --name-only HEAD
   find = !git branch -r | grep
@@ -55,7 +58,7 @@
   lreset = !git reset HEAD $1 && git checkout -- $1 && git clean -fd
   pushall = !git push --all origin && git push --follow-tags
   pushr = push -u origin HEAD    
-  pushf = push -f
+  pushf = push --force-with-lease
   tbd = for-each-ref --sort=taggerdate --format '%(refname) %(taggerdate)' refs/tags
   rdel = push origin --delete
   remote-merged = !git-remote-merged-branches
@@ -103,3 +106,8 @@
 	defaultBranch = main
 [pager]
 	branch = false
+[rerere]
+        enabled = true
+
+[pull]
+	rebase = true

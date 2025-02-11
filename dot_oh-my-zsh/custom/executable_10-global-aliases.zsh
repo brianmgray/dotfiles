@@ -21,31 +21,41 @@ alias cp-to-envfiles='~/workspaces/environment-files/bin/cp-to-envfiles'
 alias cp-from-envfiles='~/workspaces/environment-files/bin/cp-from-envfiles'
 
 # dirs
-ANALYZER_DIR=~/workspaces/fuguUX/fuguUX-WebAnalyzer
 alias dcc='~/workspaces/RainyMrGab/comedy-connector'
-alias df='~/workspaces/fuguUX'
-alias dff='~/workspaces/fuguUX/fuguUX-Frontend'
-alias dfa='$ANALYZER_DIR'
-alias dft='~/workspaces/fuguUX/fuguUX-tools'
-alias dfr='~/workspaces/fuguUX/fuguUX-releases'
-alias dfo='~/workspaces/fuguUX/.github-private'
 
-# llm
-alias dfai='${ANALYZER_DIR}/ml/heuristics/info-scent'
-alias dfam='${ANALYZER_DIR}/ml/heuristics/minimalist-design'
-alias dfac='${ANALYZER_DIR}/ml/heuristics/consistency'
+## fugu
+FUGU_CORE=~/workspaces/fuguUX/core
+alias create='$FUGU_CORE/tools/azure/deployment/create_azure_environment.sh'
+alias rcreate='./tools/azure/deployment/create_azure_environment.sh'
+alias redeployj='$FUGU_CORE/apps/processors/scripts/redeploy-java.sh --stack=brian'
+alias redeployr='$FUGU_CORE/apps/processors/scripts/redeploy-rust.sh --stack=brian --target=image --all_binaries'
+alias redeployf='create --force=frontend,redeploy --resources=redeploy'
+
+alias df='~/workspaces/fuguUX'
+alias dfc='$FUGU_CORE'
+alias dff='$FUGU_CORE/apps/frontend'
+alias dfa='$FUGU_CORE/apps/processors/processor_analyzer'
+alias dfh='$FUGU_CORE/apps/ml/heuristics'
+alias dft='$FUGU_CORE/tools'
+alias dfo='$FUGU_CORE/org'
+alias dfr='$FUGU_CORE/releases'
+
+alias dfs='~/workspaces/fuguUX/scripting'
+alias dfpr='~/workspaces/fuguUX/pr'
+
+# frontend
+alias prb='pnpm run build'
+alias prd='pnpm run dev'
+alias dcheck='pnpm run clean && pnpm run lint && pnpm run build && pnpm run dev && pnpm outdated > outdated.log'
 
 # brian
 alias dns='~/workspaces/brian/next-sandbox'
 
-# working directories
 ## admin
 alias denv='~/workspaces/environment-files'
 
-# fugu
-
-
 # Tool Aliases
+alias pnpm='npx pnpm'
 
 ## Azure
 alias azl='az login'

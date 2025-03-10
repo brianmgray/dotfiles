@@ -107,6 +107,7 @@ alias mi='mvn install'
 alias ghcl='gh cache list'
 alias ghcd='gh cache delete'
 
+# git
 
 # system aliases
 # alias vi='vim' # included in git
@@ -134,3 +135,52 @@ alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"
 # Always use color output for `ls`
 alias ls="command ls ${colorflag}"
 export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.ogg=01;35:*.mp3=01;35:*.wav=01;35:'
+
+
+### Functions
+
+function applydb() {
+  # Fetch all remote branches
+  git fetch --all
+
+  # Get the list of remote branches that start with 'dependabot/npm_and_yarn/'
+  branches=$(git branch -r | grep 'origin/dependabot/npm_and_yarn/')
+
+  # Iterate through each branch
+  for branch in $branches; do
+    # Strip the 'origin/' prefix from the branch name
+    branch_name=${branch#origin/}
+
+    # Attempt to merge the branch into the current branch
+    echo "Merging $branch_name into the current branch..."
+    git merge --no-ff --no-commit -X theirs $branch_name
+
+    # Check if the merge was successful
+    if [[ $? -ne 0 ]]; then
+      echo "Conflict detected in $branch_name. Attempting to resolve automatically..."
+      git merge --abort
+      git merge -X theirs $branch_name
+
+      if [[ $? -ne 0 ]]; then
+        echo "Could not merge $branch_name automatically. Please resolve manually."
+        echo $branch_name >> merge_failures.txt
+      else
+        echo "Successfully merged $branch_name with automatic conflict resolution."
+        git commit -m "Merged $branch_name with automatic conflict resolution"
+      fi
+    else
+      echo "Successfully merged $branch_name."
+      git commit -m "Merged $branch_name"
+    fi
+  done
+
+  # Output branches that could not be merged
+  if [[ -f merge_failures.txt ]]; then
+    echo "The following branches could not be merged automatically:"
+    cat merge_failures.txt
+    rm merge_failures.txt
+  else
+    echo "All branches merged successfully."
+  fi
+}
+

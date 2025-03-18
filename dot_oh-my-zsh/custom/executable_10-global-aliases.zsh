@@ -139,48 +139,50 @@ export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40
 
 ### Functions
 
-function applydb() {
-  # Fetch all remote branches
-  git fetch --all
+applydb() {
+  # Get the current branch name
+  current_branch=$(git rev-parse --abbrev-ref HEAD)
 
-  # Get the list of remote branches that start with 'dependabot/npm_and_yarn/'
-  branches=$(git branch -r | grep 'origin/dependabot/npm_and_yarn/')
+  # Find all remote branches with the prefix dependabot/npm_and_yarn
+  remote_branches=()
+    while IFS= read -r branch; do
+      remote_branches+=("$branch")
+    done < <(git branch -r | grep 'origin/dependabot/npm_and_yarn')
 
-  # Iterate through each branch
-  for branch in $branches; do
-    # Strip the 'origin/' prefix from the branch name
-    branch_name=${branch#origin/}
+  # Initialize an array to keep track of branches that couldn't be applied
+  failed_branches=()
 
-    # Attempt to merge the branch into the current branch
-    echo "Merging $branch_name into the current branch..."
-    git merge --no-ff --no-commit -X theirs $branch_name
+  # Loop through each remote branch and apply its changes
+  git fetch origin
+  for branch in "${remote_branches[@]}"; do
+    branch=$(echo "$branch" | sed 's|refs/heads/||')
+    echo "BRANCH=$branch..."
 
-    # Check if the merge was successful
-    if [[ $? -ne 0 ]]; then
-      echo "Conflict detected in $branch_name. Attempting to resolve automatically..."
-      git merge --abort
-      git merge -X theirs $branch_name
-
-      if [[ $? -ne 0 ]]; then
-        echo "Could not merge $branch_name automatically. Please resolve manually."
-        echo $branch_name >> merge_failures.txt
-      else
-        echo "Successfully merged $branch_name with automatic conflict resolution."
-        git commit -m "Merged $branch_name with automatic conflict resolution"
-      fi
-    else
-      echo "Successfully merged $branch_name."
-      git commit -m "Merged $branch_name"
-    fi
+#    echo "Applying changes from $branch..."
+    base_commit=$(git merge-base main $branch)
+    git cherry-pick --strategy=recursive -X theirs $base_commit..$branch
+#    if [[ $? -ne 0 ]]; then
+#      git diff --name-only --diff-filter=U | grep -E 'package-lock.json|pnpm-lock.yaml' | xargs git update-index --skip-worktree
+#      if [[ $? -ne 0 ]]; then
+#        echo "Failed to apply changes from $branch"
+#        failed_branches+=($branch)
+#        git cherry-pick --abort
+#      else
+#        git commit -m "Merged changes from $branch with conflicts resolved"
+#      fi
+#    else
+#      git commit -m "Merged changes from $branch"
+#    fi
   done
 
-  # Output branches that could not be merged
-  if [[ -f merge_failures.txt ]]; then
-    echo "The following branches could not be merged automatically:"
-    cat merge_failures.txt
-    rm merge_failures.txt
-  else
-    echo "All branches merged successfully."
+  # Switch back to the original branch
+  git checkout "$current_branch"
+
+  # Output the branches that couldn't be applied
+  if [[ ${#failed_branches[@]} -ne 0 ]]; then
+    echo "The following branches couldn't be applied:"
+    for branch in $failed_branches; do
+      echo $branch
+    done
   fi
 }
-

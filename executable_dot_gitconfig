@@ -47,7 +47,6 @@
   unstage = restore --staged
   unchange = restore
   reseto = !git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)
-  # reseto = "!git_reseto() { git reset --hard origin/$(git rev-parse --abbrev-ref HEAD); }; git_reseto"
   fa = !git config --list | grep alias | grep
   curbranch = name-rev --name-only HEAD
   find = !git branch -r | grep
@@ -65,6 +64,7 @@
   remote-merged = !git-remote-merged-branches
   remote-notmerged = !git-remote-notmerged-branches
   rgrep = !git branch -r | grep
+  epatch = !git diff > changes.patch
 
   # Show verbose output about tags, branches or remotes
   tags = tag -l

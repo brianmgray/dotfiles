@@ -25,8 +25,8 @@ alias dcc='~/workspaces/RainyMrGab/comedy-connector'
 
 ## fugu
 FUGU_CORE=~/workspaces/fuguUX/core
-alias create='$FUGU_CORE/tools/azure/deployment/create_azure_environment.sh'
-alias rcreate='./tools/azure/deployment/create_azure_environment.sh'
+alias create='caffeinate -i -s $FUGU_CORE/tools/azure/deployment/create_azure_environment.sh'
+alias rcreate='caffeinate -i -s ./tools/azure/deployment/create_azure_environment.sh'
 alias redeployj='$FUGU_CORE/apps/processors/scripts/redeploy-java.sh --stack=brian'
 alias redeployr='$FUGU_CORE/apps/processors/scripts/redeploy-rust.sh --stack=brian --target=image --all_binaries'
 alias redeployf='create --force=frontend,redeploy --resources=redeploy'

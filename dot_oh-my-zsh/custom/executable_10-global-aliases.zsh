@@ -186,3 +186,17 @@ applydb() {
     done
   fi
 }
+
+curl_with_redirects() {
+  curl -Ls -o /dev/null -w $'Final URL: %{url_effective}\n' -D - "$1" | awk '
+    BEGIN { redirects = 0 }
+    tolower($1) == "location:" { redirects++; print }
+    tolower($1) == "link:" { print }
+    /^Final URL:/ { final = $0 }
+    END {
+      if (final) print final;
+      print "Number of redirects followed:", redirects;
+    }
+  '
+}
+

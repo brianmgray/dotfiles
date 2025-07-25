@@ -39,6 +39,7 @@
   rfp = "!f() { set -x; git rebase --onto "$1" HEAD~$(( $2 + 1 )); }; f"
   addg = "!f() { git ls-files | grep \"$1\" | xargs git add; git st; }; f"
   exg = "!f() { pattern=\"$1\"; shift; cmd=\"$1\"; shift; git ls-files | grep -E \"$pattern\" | xargs -r git $cmd \"$@\"; git st;}; f"
+  cot = "!f() { git co $1 -f && pnpm install && pnpm run dev; }; f"
   d = "!f() { git diff "$@" -- . :^pnpm-lock.yaml; }; f"
   dc = d --cached
   dp = d HEAD~1 HEAD

@@ -7,6 +7,7 @@ PATH_PIECES=(
   # $PYENV_ROOT/bin
   # $PYTHON_VERSION/bin
   # $PYTHON_PACKAGES
+  $HOME/go/bin
   $HOME/.local/bin
   $OLD_PATH
   ~/Applications/brew/bin

@@ -74,6 +74,10 @@
   # Pretty log output
   hist = log --graph --pretty=format:'%Cred%h%Creset %s%C(yellow)%d%Creset %Cgreen(%cr)%Creset [%an]' --abbrev-commit --date=relative
 
+  # plugins
+  # mv-changes <src-sha> <dest-sha> <path>
+  mv-changes = !mv-changes
+
 [core]
         excludesfile = ~/.gitignore.global
 	preloadindex = true

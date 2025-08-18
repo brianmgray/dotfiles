@@ -1,0 +1,24 @@
+{
+    "model": "claude-sonnet-4-20250514",
+    "cleanupPeriodDays": 30,
+    "includeCoAuthoredBy": true,
+    "forceLoginMethod": "claudeai",
+    "env": {
+      "EDITOR": "idea",
+      "SHELL": "zsh"
+    },
+    "permissions": {
+      "defaultMode": "acceptEdits",
+      "allow": [
+        "Bash",
+        "Edit", 
+        "Write",
+        "MultiEdit",
+        "WebFetch",
+        "WebSearch"
+      ],
+      "deny": [],
+      "additionalDirectories": []
+    }
+  }
+}

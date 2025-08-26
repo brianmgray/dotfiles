@@ -9,6 +9,7 @@ PATH_PIECES=(
   # $PYTHON_PACKAGES
   $HOME/go/bin
   $HOME/.local/bin
+  ~/.npm-global/bin
   $OLD_PATH
   ~/Applications/brew/bin
 )

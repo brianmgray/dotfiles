@@ -44,4 +44,21 @@ esac
 autoload -U +X bashcompinit && bashcompinit
 source ~/.oh-my-zsh/custom/plugins/azure-cli/az.completion
 
+# broot
 source /Users/brian/.config/broot/launcher/bash/br
+
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/brian/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+
+# Enhanced command execution for copilot, see https://github.com/orgs/community/discussions/161238
+function enhanced_command() {
+    local temp_file=$(mktemp)
+    { eval "$@"; } > "$temp_file" 2>&1
+    cat "$temp_file"
+    echo ""
+    rm -f "$temp_file"
+}
+alias enh="enhanced_command"

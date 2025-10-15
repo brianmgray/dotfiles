@@ -1,5 +1,5 @@
 -Xms4g
--Xmx12g
+-Xmx10g
 -XX:SoftRefLRUPolicyMSPerMB=100
 -XX:MaxInlineLevel=15
 -XX:+UseG1GC

@@ -28,4 +28,8 @@
     "vscode-gjf.execJarPath": "/opt/homebrew/bin/google-java-format",
     "git.openRepositoryInParentFolders": "never",
     "explorer.confirmDelete": false,
+    "github.copilot.advanced": {},
+    "github.copilot.enable": {
+        "*": false
+    },
 }

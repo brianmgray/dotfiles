@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-  <key>Bazel Remote Cache</key>
-  <string>com.fuguux.bazelremotecommand</string>
-  <array>
-    <string>~/workspaces/fuguux/core/tools/bazel/run-bazel-remote.sh</string>
-  </array>
-  <key>RunAtLoad</key>
-  <true/>
-  <key>KeepAlive</key>
-  <true/>
-</dict>
+  <dict>
+    <key>Label</key>
+    <string>com.fuguux.bazelremotecommand</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/Users/brian/workspaces/fuguux/core/tools/bazel/run-bazel-remote.sh</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <!-- Runs in minimal environment, adding brew path for az -->
+    <key>EnvironmentVariables</key>
+    <dict>
+      <key>PATH</key>
+      <string>/opt/homebrew/bin/:/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH</string>
+    </dict>
+  </dict>
 </plist>
-

@@ -23,9 +23,9 @@
   r = rebase
   rc = rebase --continue
   ra = rebase --abort
-  cp = cherry-pick
-  cpc = cherry-pick --continue
-  cpa = cherry-pick --abort
+  chp = cherry-pick
+  chpc = cherry-pick --continue
+  chpa = cherry-pick --abort
   bs = bisect start
   bg = bisect good
   bb = bisect bad
@@ -66,6 +66,8 @@
   remote-notmerged = !git-remote-notmerged-branches
   rgrep = !git branch -r | grep
   epatch = !git diff > changes.patch
+  prlog = !git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%s" --reverse | tee /dev/tty | pbcopy
+  bg = !git branch | grep
 
   # Show verbose output about tags, branches or remotes
   tags = tag -l

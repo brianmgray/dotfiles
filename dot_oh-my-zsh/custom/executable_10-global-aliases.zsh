@@ -55,7 +55,7 @@ alias dns='~/workspaces/brian/next-sandbox'
 alias denv='~/workspaces/environment-files'
 
 # Tool Aliases
-alias pnpm='npx pnpm'
+# alias pnpm='npx pnpm'
 
 ## Azure
 alias azl='az login'

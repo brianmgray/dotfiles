@@ -43,6 +43,8 @@ alias dfr='$FUGU_CORE/releases'
 alias dfs='~/workspaces/fuguUX/scripting'
 alias dfpr='~/workspaces/fuguUX/pr'
 
+alias dfca='~/workspaces/fuguUX/core-archived'
+
 # frontend
 alias prb='pnpm run build'
 alias prd='pnpm run dev'
@@ -199,4 +201,20 @@ curl_with_redirects() {
     }
   '
 }
+
+# cd up until you find a dir with a .claude folder
+cdtoclaude() {
+  while [[ ! -d ".claude" && "$PWD" != "/" ]]; do
+    cd ..
+  done
+  
+  if [[ -d ".claude" ]]; then
+    echo "Found .claude/ at $PWD"
+    return 0
+  else
+    echo "No .claude/ folder found"
+    return 1
+  fi
+}
+
 

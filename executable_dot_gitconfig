@@ -117,6 +117,7 @@
 	branch = false
 [rerere]
         enabled = true
+	autoupdate = true
 
 [pull]
 	rebase = true

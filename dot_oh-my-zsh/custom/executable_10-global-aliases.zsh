@@ -217,4 +217,17 @@ cdtoclaude() {
   fi
 }
 
+logtee() {
+  if [ $# -lt 2 ]; then
+    echo "Usage: logtee <logfile> <command> [args...]" >&2
+    return 1
+  fi
+
+  local logfile="$1"
+  shift
+
+  # Show output and save (append) to file
+  "$@" 2>&1 | tee -a "$logfile"
+}
+
 

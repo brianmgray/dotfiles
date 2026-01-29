@@ -32,7 +32,7 @@
   br = bisect reset
 
   # fugu
-  cbr = "!git branch | egrep '^\\s*(bp|mike|jasonL|peitong)/' | xargs -I {} sh -c 'echo Deleting branch: {}; git branch -D {}'"
+  cbr = "!git branch | egrep '^\\s*(bp|mike|jasonL|daisy)/' | xargs -I {} sh -c 'echo Deleting branch: {}; git branch -D {}'"
 
   # useful
   cog = "!git_cog() { git co $(git branch | grep "$1" | head -n 1); }; git_cog"

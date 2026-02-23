@@ -8,7 +8,7 @@ alias ktm="lsof | grep /Volumes/BGTimeMachine | awk '{print(\$2)}'  | xargs -I '
 alias spacer="defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}' && killall Dock"
 
 # convenience commands
-alias netlify='npx netlify'
+# alias netlify='npx netlify'
 # alias ng='node node_modules/.bin/ng'
 # alias act='act --container-architecture linux/amd64'
 

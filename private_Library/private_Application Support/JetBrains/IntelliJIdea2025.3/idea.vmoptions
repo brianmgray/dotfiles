@@ -1,11 +1,15 @@
--Xms4g
+-Xms10g
 -Xmx10g
+-XX:ReservedCodeCacheSize=1024m
+-XX:MaxMetaspaceSize=2048m
 -XX:SoftRefLRUPolicyMSPerMB=100
 -XX:MaxInlineLevel=15
 -XX:+UseG1GC
 -XX:MaxGCPauseMillis=200
--XX:ConcGCThreads=4
--XX:ParallelGCThreads=4
+-XX:ConcGCThreads=6
+-XX:ParallelGCThreads=6
+-XX:+UseStringDeduplication
+-XX:-UseGCOverheadLimit
 
 # for google-java-format
 --add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED

@@ -21,7 +21,7 @@ alias cp-to-envfiles='~/workspaces/environment-files/bin/cp-to-envfiles'
 alias cp-from-envfiles='~/workspaces/environment-files/bin/cp-from-envfiles'
 
 # dirs
-alias dcc='~/workspaces/RainyMrGab/comedy-connector'
+alias dcc='~/workspaces/RainyMrGab/comedy-connector-app'
 
 ## fugu
 FUGU_CORE=~/workspaces/fuguUX/core

@@ -1,6 +1,4 @@
 {
-  "model": "opusplan",
-  "includeCoAuthoredBy": false,
   "env": {
     "NODE_ENV": "development",
     "JAVA_HOME": "/opt/homebrew/opt/openjdk@17",
@@ -10,10 +8,7 @@
     "EDITOR": "idea",
     "SHELL": "zsh"
   },
-  "enabledPlugins": {
-    "planning-with-files@planning-with-files": true,
-    "fullstack-dev-skills@fullstack-dev-skills": true
-  },
+  "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
       "Bash",
@@ -67,6 +62,47 @@
     "ask": [],
     "defaultMode": "plan"
   },
+  "model": "opusplan",
+  "enabledPlugins": {
+    "planning-with-files@planning-with-files": true,
+    "fullstack-dev-skills@fullstack-dev-skills": true
+  },
+  "extraKnownMarketplaces": {
+    "thedotmack": {
+      "source": {
+        "source": "github",
+        "repo": "thedotmack/claude-mem"
+      }
+    },
+    "code-review-graph": {
+      "source": {
+        "source": "github",
+        "repo": "tirth8205/code-review-graph"
+      }
+    }
+  },
   "forceLoginMethod": "claudeai",
-  "effortLevel": "high"
+  "effortLevel": "high",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/allow-sleep.sh"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/prevent-sleep.sh"
+          }
+        ]
+      }
+    ]
+  }
 }

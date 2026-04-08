@@ -6,7 +6,8 @@
     "PYTHONPATH": ".",
     "BAZEL_BIN": "./bazel-bin",
     "EDITOR": "idea",
-    "SHELL": "zsh"
+    "SHELL": "zsh",
+    "PATH": "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
   },
   "includeCoAuthoredBy": false,
   "permissions": {

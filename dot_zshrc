@@ -32,6 +32,9 @@ source $ZSH/oh-my-zsh.sh
 
 # ~~~~~ User config ~~~~
 
+# homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # pnpm
 export PNPM_HOME="/Users/brian/Library/pnpm"
 case ":$PATH:" in
@@ -46,12 +49,6 @@ source ~/.oh-my-zsh/custom/plugins/azure-cli/az.completion
 
 # broot
 source /Users/brian/.config/broot/launcher/bash/br
-
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/brian/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions
 
 # Enhanced command execution for copilot, see https://github.com/orgs/community/discussions/161238
 function enhanced_command() {
@@ -71,3 +68,10 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 alias claude-mem='bun "/Users/brian/.claude/plugins/cache/thedotmack/claude-mem/10.5.5/scripts/worker-service.cjs"'
+
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/brian/.docker/completions $fpath)
+autoload -Uz compinit
+compinit -i
+# End of Docker CLI completions
+

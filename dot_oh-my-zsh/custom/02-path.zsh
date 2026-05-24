@@ -10,6 +10,7 @@ PATH_PIECES=(
   $HOME/go/bin
   $HOME/.local/bin
   ~/.npm-global/bin
+  /opt/homebrew/opt/libpq/bin
   $OLD_PATH
   ~/Applications/brew/bin
 )

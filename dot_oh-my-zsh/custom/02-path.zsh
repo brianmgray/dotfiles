@@ -23,5 +23,13 @@ do
 done
 export PATH=$path
 
+# pnpm - needed for pnpm env
+# export PNPM_HOME="/Users/brian/Library/pnpm"
+# case ":$PATH:" in
+#   *":$PNPM_HOME:"*) ;;
+#   *) export PATH="$PNPM_HOME:$PATH" ;;
+# esac
+# pnpm end
+
 # initialize jenv
 eval "$(jenv init -)"

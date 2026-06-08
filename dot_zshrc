@@ -24,6 +24,9 @@ plugins=(git zsh-nvm)
 # Theme
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
+# homebrew - must be above the oh-my-zsh config so .nvm and brew are on the PATH in the proper order
+eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null)"
+
 # All config must be done before this line
 source $ZSH/oh-my-zsh.sh
 
@@ -31,9 +34,6 @@ source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # ~~~~~ User config ~~~~
-
-# homebrew
-eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null)"
 
 # azure cli
 autoload -U +X bashcompinit && bashcompinit

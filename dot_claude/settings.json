@@ -7,7 +7,7 @@
     "BAZEL_BIN": "./bazel-bin",
     "EDITOR": "idea",
     "SHELL": "zsh",
-    "PATH": "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+    "PATH": "/Users/brian/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
   },
   "includeCoAuthoredBy": false,
   "permissions": {
@@ -95,12 +95,6 @@
       "source": {
         "source": "github",
         "repo": "thedotmack/claude-mem"
-      }
-    },
-    "code-review-graph": {
-      "source": {
-        "source": "github",
-        "repo": "tirth8205/code-review-graph"
       }
     }
   },

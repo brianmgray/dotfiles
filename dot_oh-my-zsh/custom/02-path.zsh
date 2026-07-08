@@ -1,5 +1,8 @@
 #!/env zsh
 
+# pnpm has to go AFTER nvm which has been setup elsewhere
+export PNPM_HOME="$HOME/Library/pnpm"
+
 # Setup path
 OLD_PATH=$PATH
 PATH_PIECES=(
@@ -12,6 +15,7 @@ PATH_PIECES=(
   ~/.npm-global/bin
   /opt/homebrew/opt/libpq/bin
   $OLD_PATH
+  $PNPM_HOME
   ~/Applications/brew/bin
 )
 

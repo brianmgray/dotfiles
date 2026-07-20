@@ -99,5 +99,6 @@
   },
   "forceLoginMethod": "claudeai",
   "effortLevel": "high",
+  "tui": "fullscreen",
   "preferredNotifChannel": "iterm2_with_bell"
 }

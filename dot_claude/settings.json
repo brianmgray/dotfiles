@@ -87,7 +87,8 @@
   },
   "enabledPlugins": {
     "planning-with-files@planning-with-files": true,
-    "fullstack-dev-skills@fullstack-dev-skills": true
+    "fullstack-dev-skills@fullstack-dev-skills": true,
+    "svg-logo-designer@rknall-custom-skills": true
   },
   "extraKnownMarketplaces": {
     "thedotmack": {
@@ -95,10 +96,17 @@
         "source": "github",
         "repo": "thedotmack/claude-mem"
       }
+    },
+    "rknall-custom-skills": {
+      "source": {
+        "source": "github",
+        "repo": "rknall/claude-skills"
+      }
     }
   },
   "forceLoginMethod": "claudeai",
   "effortLevel": "high",
   "tui": "fullscreen",
-  "preferredNotifChannel": "iterm2_with_bell"
+  "preferredNotifChannel": "iterm2_with_bell",
+  "agentPushNotifEnabled": true
 }
